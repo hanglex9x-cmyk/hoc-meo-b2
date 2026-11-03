@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Học Mẹo Lý Thuyết B2 — 600 Câu</title>
+<meta name="description" content="Web app học mẹo 600 câu lý thuyết lái xe B2: mẹo chọn đáp án, biển báo, sa hình, thi thử 35 câu/22 phút.">
+<style>
+:root{--main:#f56300;--main2:#ff8a3d;--bg:#f0f2f5;--card:#fff;--txt:#050505;--sub:#65676b;--line:#e4e6eb;--ok:#1a9e54;--bad:#e03131;--warn:#f59f00}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{overscroll-behavior:none}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);font-size:15px;line-height:1.5}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input{font-family:inherit;font-size:16px}
+.wrap{max-width:480px;margin:0 auto;padding:0 12px 96px}
+@media(min-width:900px){.wrap{max-width:1100px;padding:0 24px 40px}}
+header{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--main),var(--main2));color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.hd-in{max-width:480px;margin:0 auto;padding:14px 16px 12px;display:flex;align-items:center;gap:12px}
+@media(min-width:900px){.hd-in{max-width:1100px}}
+.logo{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+.hd-in h1{font-size:18px;line-height:1.25}
+.hd-in p{font-size:12px;opacity:.92}
+.hd-prog{margin-left:auto;text-align:right;flex:none}
+.hd-prog b{font-size:20px}
+.hd-prog span{display:block;font-size:11px;opacity:.9}
+main{padding-top:14px}
+.view{display:none}.view.on{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:900px){.grid2{grid-template-columns:repeat(4,1fr)}.cards{columns:2;column-gap:12px}.cards .tip{break-inside:avoid}}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:14px;text-align:center}
+.stat b{font-size:22px;display:block}
+.stat span{font-size:12px;color:var(--sub)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px;margin-bottom:12px}
+.card h3{font-size:16px;margin-bottom:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--main);color:#fff;font-weight:700;font-size:15px;padding:13px 18px;border-radius:14px;width:100%;min-height:48px}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:#fff;color:var(--main);border:2px solid var(--main)}
+.btn.gray{background:#eef0f3;color:var(--txt)}
+.btn.sm{width:auto;min-height:40px;padding:8px 14px;font-size:13px;border-radius:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid var(--line);font-size:13px;font-weight:600}
+.chip.on{background:var(--main);border-color:var(--main);color:#fff}
+.search{width:100%;height:48px;border:1.5px solid var(--line);border-radius:14px;padding:0 14px;background:#fff;margin-bottom:10px}
+.tip{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:14px;margin-bottom:10px}
+.tip.learned{border-color:var(--ok);background:#f4fbf7}
+.tip-h{display:flex;gap:10px;align-items:flex-start}
+.tip-h h4{font-size:15px;flex:1}
+.tag{flex:none;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;background:#fff1e8;color:var(--main)}
+.tip-b{white-space:pre-line;font-size:14px;margin-top:8px;color:#222}
+.tip-b b{color:#000}
+.mnemo{margin-top:10px;background:#fff8ec;border:1.5px dashed var(--warn);border-radius:12px;padding:9px 12px;font-size:13.5px}
+.mnemo b{color:#b97a00}
+.tip-f{display:flex;gap:8px;margin-top:10px;align-items:center}
+.vd{font-size:12px;color:var(--sub);flex:1}
+.chk{flex:none;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:700;background:#eef0f3}
+.chk.done{background:var(--ok);color:#fff}
+.pbar{height:10px;background:#e9ebee;border-radius:99px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--main);border-radius:99px;transition:width .3s}
+nav.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);display:flex;box-shadow:0 -2px 14px rgba(0,0,0,.06)}
+nav.tabbar button{flex:1;padding:8px 2px calc(8px + env(safe-area-inset-bottom));font-size:11px;font-weight:600;color:var(--sub);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.tabbar button .ic{font-size:21px}
+nav.tabbar button.on{color:var(--main)}
+@media(min-width:900px){nav.tabbar{left:50%;transform:translateX(-50%);max-width:560px;border-radius:18px 18px 0 0;border:1px solid var(--line);border-bottom:none}}
+.qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:16px}
+.qbox .qn{font-size:12px;font-weight:700;color:var(--main)}
+.qbox h3{font-size:16.5px;margin:6px 0 12px;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;margin-bottom:9px;font-size:15px;background:#fff;min-height:48px}
+.opt:active{transform:scale(.99)}
+.opt.right{border-color:var(--ok);background:#e9f9f0;font-weight:700}
+.opt.wrong{border-color:var(--bad);background:#fdeeee}
+.opt.pick{border-color:var(--main);background:#fff4ec}
+.exp{background:#f4fbf7;border:1px solid #bfe8d2;border-radius:12px;padding:11px 13px;font-size:14px;margin:6px 0 10px;white-space:pre-line}
+.liet{display:inline-block;font-size:11px;font-weight:800;color:#fff;background:var(--bad);border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:2px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:top}
+th{background:#fff4ec}
+.sec-t{font-size:17px;font-weight:800;margin:18px 0 8px}
+.note{font-size:13px;color:var(--sub)}
+.kq{text-align:center;padding:10px 0}
+.kq .big{font-size:44px;font-weight:900}
+.pass{color:var(--ok)}.fail{color:var(--bad)}
+.timer{font-variant-numeric:tabular-nums;font-weight:800}
+.examgrid{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.examgrid button{width:38px;height:38px;border-radius:10px;background:#eef0f3;font-weight:700;font-size:13px}
+.examgrid button.did{background:var(--main);color:#fff}
+.examgrid button.cur{outline:2.5px solid var(--txt)}
+.flash{min-height:300px;display:flex;flex-direction:column}
+.flash .tip-b{font-size:16px}
+.rowbtns{display:flex;gap:10px;margin-top:12px}.rowbtns .btn{flex:1}
+.theme-dot{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px #ccc;flex:none}
+.theme-dot.on{box-shadow:0 0 0 3px var(--txt)}
+ul.tight{padding-left:20px}ul.tight li{margin-bottom:5px;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="hd-in">
+    <div class="logo">🚗</div>
+    <div><h1>Học Mẹo Lý Thuyết B2</h1><p>600 câu · Mẹo chọn đáp án · Biển báo · Sa hình</p></div>
+    <div class="hd-prog"><b id="hdPct">0%</b><span>đã thuộc</span></div>
+  </div>
+</header>
+<div class="wrap"><main>
+
+<!-- HOME -->
+<section class="view on" id="v-home">
+  <div class="grid2">
+    <div class="stat"><b>600</b><span>câu hỏi lý thuyết</span></div>
+    <div class="stat"><b id="stTips">–</b><span>thẻ mẹo cần thuộc</span></div>
+    <div class="stat"><b>35 câu · 22'</b><span>đề thi B2 · đậu ≥ 32</span></div>
+    <div class="stat"><b style="color:var(--bad)">Điểm liệt</b><span>sai 1 câu là rớt</span></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>📈 Tiến độ học mẹo của bạn</h3>
+    <div class="pbar"><i id="homeBar" style="width:0%"></i></div>
+    <p class="note" id="homeProgTxt" style="margin-top:8px"></p>
+    <div class="rowbtns">
+      <button class="btn" onclick="go('learn')">📚 Học mẹo ngay</button>
+      <button class="btn ghost" onclick="startExam()">📝 Thi thử</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🗂️ Học theo chương (đúng cấu trúc 600 câu)</h3>
+    <div id="chapList"></div>
+  </div>
+  <div class="card">
+    <h3>⚠️ Câu điểm liệt — sai là rớt ngay</h3>
+    <ul class="tight">
+      <li>Lái xe khi trong máu/hơi thở <b>có nồng độ cồn</b>, hoặc có chất ma tuý.</li>
+      <li>Không chấp hành hiệu lệnh kiểm tra nồng độ cồn / ma tuý.</li>
+      <li>Trên cao tốc: <b>lùi xe, quay đầu xe</b>, đi ngược chiều, dừng đỗ không đúng quy định.</li>
+      <li>Điều khiển xe không có GPLX / GPLX không phù hợp hạng xe.</li>
+      <li>Không nhường đường / gây tai nạn với xe ưu tiên đang làm nhiệm vụ.</li>
+      <li>Để xe lấn làn gây tai nạn, vượt đèn đỏ gây tai nạn nghiêm trọng.</li>
+    </ul>
+    <p class="note">Mẹo nhớ: cứ câu nào dính <b>cồn – ma tuý – cao tốc – xe ưu tiên</b> thì đọc thật kỹ, đây là nhóm câu điểm liệt hay ra nhất.</p>
+  </div>
+  <div class="card">
+    <h3>🎨 Màu chủ đạo</h3>
+    <div style="display:flex;gap:10px;margin-top:6px">
+      <button class="theme-dot" data-th="orange" style="background:#f56300" onclick="setTheme('orange')" aria-label="Cam"></button>
+      <button class="theme-dot" data-th="blue" style="background:#0866ff" onclick="setTheme('blue')" aria-label="Xanh dương"></button>
+      <button class="theme-dot" data-th="green" style="background:#1a9e54" onclick="setTheme('green')" aria-label="Xanh lá"></button>
+      <button class="theme-dot" data-th="red" style="background:#e03131" onclick="setTheme('red')" aria-label="Đỏ"></button>
+    </div>
+  </div>
+  <p class="note" style="text-align:center">Nội dung mẹo trích từ 2 tài liệu: “Mẹo học luật giao thông 600 câu” &amp; “Sách mẹo 600 câu lý thuyết (HLX)”. App chạy offline, tiến độ lưu ngay trên máy này.</p>
+</section>
+
+<!-- LEARN -->
+<section class="view" id="v-learn">
+  <input class="search" id="q" placeholder="🔍 Tìm mẹo: tốc độ, biển cấm, sa hình, FE FC…" oninput="renderTips()">
+  <div class="chips" id="chapChips"></div>
+  <div style="display:flex;gap:8px;margin-bottom:10px">
+    <button class="btn sm" onclick="startFlash()">🃏 Học dạng thẻ lật</button>
+    <button class="btn sm gray" onclick="toggleOnlyNew()" id="btnNew">Chỉ xem chưa thuộc</button>
+  </div>
+  <div id="flashBox"></div>
+  <div class="cards" id="tipList"></div>
+</section>
+
+<!-- QUIZ -->
+<section class="view" id="v-quiz">
+  <div id="quizBox"></div>
+</section>
+
+<!-- EXAM -->
+<section class="view" id="v-exam">
+  <div id="examBox"></div>
+</section>
+
+<!-- LOOKUP -->
+<section class="view" id="v-lookup">
+  <div id="lookupBox"></div>
+</section>
+
+</main></div>
+
+<nav class="tabbar">
+  <button data-v="home" class="on" onclick="go('home')"><span class="ic">🏠</span>Trang chủ</button>
+  <button data-v="learn" onclick="go('learn')"><span class="ic">📚</span>Học mẹo</button>
+  <button data-v="quiz" onclick="go('quiz')"><span class="ic">🎯</span>Luyện tập</button>
+  <button data-v="exam" onclick="go('exam')"><span class="ic">📝</span>Thi thử</button>
+  <button data-v="lookup" onclick="go('lookup')"><span class="ic">📖</span>Tra cứu</button>
+</nav>
+
+<script>
+"use strict";
+/* ========= DỮ LIỆU MẸO — trích từ 2 tài liệu PDF người dùng gửi ========= */
+const CHAPS=[
+ {id:"vang",name:"⭐ Mẹo vàng chọn đáp án",range:"Áp dụng toàn bộ phần chữ"},
+ {id:"c1",name:"Chương 1 · Khái niệm & quy tắc GT",range:"Câu 1–180"},
+ {id:"tocdo",name:"Tốc độ · Khoảng cách · Tuổi · Hạng GPLX",range:"Câu 54–162"},
+ {id:"c2",name:"Chương 2 · Văn hoá, đạo đức & nghiệp vụ vận tải",range:"Câu 167–213"},
+ {id:"c34",name:"Chương 3+4 · Kỹ thuật lái xe & cấu tạo sửa chữa",range:"Câu 206–304"},
+ {id:"bien",name:"Chương 5 · Biển báo & vạch kẻ đường",range:"Câu 301–485"},
+ {id:"sa",name:"Chương 6 · Sa hình & xử lý tình huống",range:"Câu 486–600"},
+];
+const TIPS=[
+/* ---- MẸO VÀNG ---- */
+{ch:"vang",t:"Mẹo 1 — Thấy “Bị nghiêm cấm” là chọn ngay",b:"Đáp án nào chứa cụm từ “Bị nghiêm cấm” → đó là đáp án đúng, không cần đọc hết đề.\nTương tự: đáp án bắt đầu bằng “Không được…” → đúng 99%.",m:"Nghiêm cấm = chọn. Không được = chọn.",vd:"Câu 18, 20, 22, 24, 26, 30, 209"},
+{ch:"vang",t:"Mẹo 2 — Đáp án cuối “Cả ý (…) và ý (…)” đúng 90%",b:"Câu trả lời cuối cùng có dạng “Cả ý 1 và ý 2…” → chọn đáp án cuối.\nNếu đề có 4 đáp án và đáp án 4 chứa từ “Cả” → chọn luôn đáp án 4.\nNgoại lệ: câu về rượu bia (chọn 1), người đủ 16 tuổi (chọn 2), hạng FC (chọn 2), vận tải khách (chọn 3), câu biển báo.",m:"Có “Cả” ở ý 4 → bấm 4.",vd:"Câu 24, 59, 70, 169 là ngoại lệ"},
+{ch:"vang",t:"Mẹo 3 — “Quan to quan bự”: chọn đáp án “quan” dài nhất",b:"Đáp án nào có từ “quan sát / cơ quan…” và DÀI nhất → đáp án đó đúng.\n2 đáp án “quan” dài bằng nhau → chọn đáp án ở trên.\nĐầu đáp án có “Quan sát…” → chọn đáp án dài nhất.",m:"Quan dài là quan đúng.",vd:"Câu 92, 218, 223, 254, 257, 264"},
+{ch:"vang",t:"Mẹo 4 — Đầu đáp án có “Phải…” → chọn, nhiều “Phải” → chọn dài nhất",b:"Đáp án bắt đầu bằng “Phải…” thường là đáp án đúng. Nếu nhiều đáp án cùng có “Phải…” → chọn đáp án dài nhất.\nNgoại lệ: câu 107 chọn đáp án 1; câu 158 chọn đáp án 4.",m:"Phải + dài nhất = đúng.",vd:"Câu 77, 86, 93, 101, 105, 122"},
+{ch:"vang",t:"Mẹo 5 — Từ khoá “chọn ngay” trong đáp án",b:"Thấy các cụm sau trong đáp án là chọn ngay:\n• “Cơ quan có thẩm quyền”\n• “Ở đúng nơi quy định”\n• “Thanh nối cứng”\n• “Không quá 4 giờ, không quá 10 giờ”\n• “Giảm tốc độ – về số thấp – về số 1”\n• “Bị xử phạt hành chính”",m:"Thấy là chọn, khỏi phân vân.",vd:"Câu 21, 78, 104, 106, 137, 171, 195"},
+{ch:"vang",t:"Mẹo 6 — Hành vi bị nghiêm cấm (nhóm điểm liệt tư duy)",b:"Các hành vi sau luôn bị nghiêm cấm, gặp là chọn ý cấm:\n• Rải vật sắc nhọn • Cải tạo trái phép • Dùng tay cầm điện thoại • Lạng lách, đánh võng • Buông cả hai tay • Đi dàn hàng ngang • Bấm còi liên tục • Đe doạ, xúc phạm người khác.",m:"Sắc nhọn – cải tạo – điện thoại – lạng lách = CẤM.",vd:"Câu 19, 29, 32, 52, 64, 170, 201"},
+{ch:"vang",t:"Mẹo 7 — Đầu câu có “Hành vi” → chọn đáp án cuối",b:"Câu hỏi bắt đầu bằng từ “Hành vi” → luôn chọn đáp án cuối.\nLưu ý riêng: đáp án số 2 có cụm “Rải vật sắc nhọn” → chọn ngay đáp án 2.",m:"Hành vi → ý cuối.",vd:"Câu 20, 22, 23, 25, 27, 28, 30, 197"},
+{ch:"vang",t:"Mẹo 8 — Khái niệm: nhớ bài thơ chọn số",b:"Đề khái niệm, nhìn cụm từ trong đề bài:\n• “Dải phân cách” ngắn, “Phương tiện giao thông thô sơ”, “Người lái xe”, “Khổ giới hạn” → đáp án 1\n• “Dừng xe”, “Đỗ xe”, “Phần của đường bộ”, “Làn đường”, “Người điều khiển giao thông”, “Dải phân cách” → đáp án 2\n• “Dải phân cách” dài, “tham gia” → đáp án 3\n• “Đường cao tốc”, “đường ưu tiên” → đáp án 4",m:"Dải ngắn – thô sơ – người lái – khổ → 1\nDừng – đỗ – phần – làn – khiển → 2\nDải dài – tham gia → 3 · Cao tốc – ưu tiên → 4",vd:"Câu 1–16"},
+{ch:"vang",t:"Mẹo 9 — “Gồm” ở giữa câu hỏi → chọn “Cả”",b:"Giữa câu hỏi có từ “gồm” → chọn đáp án “Cả ý 1 và ý 2”.",m:"Thấy “gồm” → chọn Cả.",vd:"Câu 10, 11, 12"},
+{ch:"vang",t:"Mẹo 10 — Dừng xe, đỗ xe (phần chữ) → chọn 2 · “Tham gia” → chọn 3",b:"• Câu phần chữ hỏi về “dừng xe / đỗ xe” → chọn đáp án 2.\n• Câu có cụm “…tham gia…” nằm trong ngoặc kép → chọn đáp án 3.",m:"Dừng đỗ → 2 · “Tham gia” → 3.",vd:"Câu 10, 11, 12, 14, 15"},
+/* ---- CHƯƠNG 1 ---- */
+{ch:"c1",t:"Người điều khiển phương tiện = người điều khiển xe cơ giới",b:"• “Người điều khiển phương tiện (người lái xe)” → là người điều khiển xe cơ giới.\n• “Người điều khiển giao thông” → là cảnh sát giao thông.\n• “Thiết bị an toàn, chức năng phục vụ” → luôn chọn 1.\n• Hiệu lệnh người điều khiển trái với tín hiệu → theo hiệu lệnh người điều khiển.",m:"Điều khiển phương tiện → xe cơ giới · Điều khiển giao thông → CSGT.",vd:"Câu 6, 7, 13, 17, 18, 38"},
+{ch:"c1",t:"Vừa có biển cố định + biển tạm thời → theo biển tạm thời",b:"Khi trên đường vừa có biển báo cố định vừa có biển báo tạm thời có ý nghĩa khác nhau → chấp hành biển hiệu tạm thời.",m:"Tạm thời thắng cố định.",vd:"Câu 39"},
+{ch:"c1",t:"CSGT giơ tay: phần chữ giơ 1 chọn 3, giơ 2 chọn 4",b:"• CSGT giơ 1 tay → chọn đáp án 3.\n• CSGT giơ 2 tay (đứng trên bục, giang 2 tay) → chọn đáp án 4.\n• Các trường hợp CSGT còn lại → chọn đáp án 3.\n• Sa hình có hình CSGT → luôn chọn đáp án 3, không cần đếm tay.",m:"Giơ 1 → 3 · Giơ 2 → 4 · Sa hình → 3.",vd:"Câu 36, 37, 82, 83, 528, 529"},
+{ch:"c1",t:"Đi bên phải khi nào, bên trái khi nào?",b:"ĐI BÊN PHẢI khi: đi chậm, đi xe thô sơ, gặp biển nguy hiểm, xe sau xin vượt an toàn, xe ưu tiên có tín hiệu.\nĐI BÊN TRÁI khi: đi nhanh, khi vượt xe khác, xe cơ giới / xe máy chuyên dùng.",m:"Chậm – thô sơ – nhường vượt → phải · Nhanh – vượt → trái.",vd:"Câu 43, 44, 45, 79, 81, 87, 94, 96, 110"},
+{ch:"c1",t:"Nhường đường: vòng xuyến có biển nhường trái, không biển nhường phải",b:"• Nhường cho người đi bộ, xe lên dốc, xe trên đường ưu tiên.\n• Vào vòng xuyến: CÓ biển báo vòng xuyến → nhường xe bên TRÁI. KHÔNG có biển → nhường xe bên PHẢI.",m:"Vòng xuyến: Có → Trái · Không → Phải.",vd:"Câu 83, 89, 91, 92, 93, 116, 491, 504"},
+{ch:"c1",t:"Còi & đèn ban đêm",b:"• Dùng còi trong đô thị: từ 5 giờ đến 22 giờ.\n• Ban đêm 22h–5h: chỉ bật đèn chiếu gần (đèn cốt), báo vượt chỉ bằng đèn, gặp xe ngược chiều chuyển pha → cốt, không nhìn thẳng vào đèn.\n• Đèn sau sáng trắng = xe đang lùi. Trời mưa to: bật đèn chiếu gần + đèn vàng.",m:"Còi 5–22h · Đêm: cốt + đèn, không còi.",vd:"Câu 49, 50, 51, 80, 225, 244"},
+{ch:"c1",t:"Con số thần thánh — thuộc lòng",b:"• Đỗ cách lề: 0,25 m • Đỗ cách xe đối diện (đường hẹp): 20 m\n• Dừng trước đường sắt: 5 m • Cự ly tối thiểu giữa 2 xe (biển phụ): 8 m\n• Dùng GPLX đã báo mất: 5 năm không được cấp lại\n• Hành lý miễn cước: 20 kg • Báo tàu dừng: 500 m\n• Âm lượng còi: 90–115 dB(A) → chọn số 115\n• Xe thiết kế dưới 70 km/h: không được vào cao tốc",m:"0,25 – 20 – 5 – 8 – 20kg – 500 – 115 – 70",vd:"Câu 60, 61, 81, 100, 162, 163"},
+{ch:"c1",t:"Đường khó đi → về số thấp / số 1",b:"Đề nhắc: lên dốc, xuống dốc, qua rãnh lở, ổ gà, ngập nước, trơn trượt, lầy lội, đường vòng → chọn đáp án có “giảm tốc độ / về số thấp / về số 1”.\nRiêng: nhập làn cao tốc thì phải TĂNG tốc độ (ngoại lệ duy nhất).",m:"Khó đi → số thấp · Nhập cao tốc → tăng tốc.",vd:"Câu 212–214, 220–222, 240, 241, 245, 284"},
+{ch:"c1",t:"Làn đường: “đường còn” chọn 2, “đường hết” chọn 3",b:"Câu hỏi có chữ “đường…” mà phía sau còn chữ → chọn đáp án 2.\nChữ “đường” nằm ở cuối câu hỏi → chọn đáp án 3.",m:"Đường còn → 2 · Đường hết → 3.",vd:"Câu 430, 431"},
+/* ---- TỐC ĐỘ / TUỔI / HẠNG ---- */
+{ch:"tocdo",t:"Tốc độ trong khu đông dân cư: 4 Máy – 5 Không – 6 Có",b:"Đề cho dãy 40, 50, 60 km/h:\n• Xe gắn máy → 40 km/h\n• Đường KHÔNG có dải phân cách → 50 km/h\n• Đường CÓ dải phân cách → 60 km/h\nMẹo chung: hỏi “trong khu dân cư” → chọn đáp án 1; có cụm “đường đôi không có dải phân cách giữa” → chọn đáp án 2.",m:"4 Máy · 5 Không · 6 Có",vd:"Câu 124–128, 145–148"},
+{ch:"tocdo",t:"Ngoài khu đông dân cư: đường đôi chủ đạo 100, hai chiều 90",b:"Mẹo sách HLX: lấy số chủ đạo trừ con số trong câu hỏi → ra đáp án. VD: 100 − 90 = 10 → bỏ số 0 → chọn đáp án 1.\nMẹo chữ: đáp án có “xi téc / bê tông” → chọn luôn; không có → chọn đáp án bắt đầu “xe ô tô con”.\nXe chở hàng 4 bánh có gắn động cơ → 50 km/h.",m:"Đôi 100 · Chiều 90 · Téc–Tông–Con",vd:"Câu 129–136, 149–156"},
+{ch:"tocdo",t:"Bảng tốc độ tối đa (km/h) — học thuộc",b:"TRONG khu dân cư: xe gắn máy/máy điện/chuyên dùng = 40 mọi đường. Xe còn lại: đường đôi/1 chiều ≥2 làn = 60, đường 2 chiều/1 làn = 50.\nNGOÀI khu dân cư (đôi / 2 chiều):\n• Ô tô con, ≤30 chỗ, tải <3,5T: 90 / 80\n• Ô tô >30 chỗ, tải >3,5T: 80 / 70\n• Mô tô, buýt, đầu kéo, ô tô chuyên dùng: 70 / 60\n• Kéo rơ moóc, trộn vữa/bê tông, xi téc: 60 / 50\n• Xe gắn máy & tương tự: 40 / 40",m:"Trong: 40 – 60/50 · Ngoài: 90/80 – 80/70 – 70/60 – 60/50 – 40",vd:"Câu 124–156"},
+{ch:"tocdo",t:"Khoảng cách an toàn: tốc độ lớn nhất − 30",b:"Mẹo: lấy tốc độ tối đa trong đề trừ 30 → chọn đáp án gần nhất.\nVD: chạy 60–80 km/h → cách 55 m (chọn đáp án 2); 80–100 và 100–120 → chọn đáp án 3 (70m/100m).\nMẹo số đáp án: số lớn nhất trong đề bắt đầu bằng 8 → chọn 2, còn lại → chọn 3.",m:"Tốc độ − 30 = khoảng cách · Đầu 8 → 2, còn lại → 3.",vd:"Câu 137–140, 158–162"},
+{ch:"tocdo",t:"Độ tuổi: cộng 3 — B 18, C 21, D 24, E 27",b:"• Xe gắn máy dưới 50cc: 16 tuổi • Mô tô A1–A2–A3: 18 tuổi\n• B, B1, B2 → 18 tuổi • C, FB2 → 21 tuổi (18+3)\n• D, FC → 24 tuổi (21+3) • E, FD → 27 tuổi (24+3)\n• Tuổi tối đa hạng E: nam 55, nữ 50.\nMẹo chọn: thấy 3 đáp án tuổi → chọn số tuổi LỚN nhất; hỏi tuổi → chọn đáp án 2, riêng hạng E → đáp án 3.",m:"18 – 21 – 24 – 27 · E tối đa: nam 55, nữ 50",vd:"Câu 54–59, 118–122"},
+{ch:"tocdo",t:"Hạng GPLX: Em 1 (FE) — Chị 2 (FC)",b:"• A1: mô tô dưới 175cc + xe 3 bánh cho người khuyết tật\n• A2: từ 175cc trở lên • A3: mô tô 3 bánh\n• B1: đến 9 chỗ, KHÔNG hành nghề • B2: đến 9 chỗ, tải dưới 3,5T, được hành nghề\n• C: đến 9 chỗ, tải TRÊN 3,5T • D: đến 30 chỗ • E: TRÊN 30 chỗ\n• FE (E+kéo, ô tô khách nối toa) → đáp án 1 · FC (C+kéo, đầu kéo) → đáp án 2\n• Hạng A, B, C, D, D2 → chọn đáp án cuối. C1/D1/D2: lấy số +1 ra số đáp án (C1+1=2).",m:"Em FE → 1 · Chị FC → 2 · B2: 9 chỗ + dưới 3,5 tấn",vd:"Câu 60–71, 123–135"},
+/* ---- CHƯƠNG 2 ---- */
+{ch:"c2",t:"Nghiệp vụ vận tải — bảng tóm tắt đáp án đúng",b:"• Người lái xe: không lái liên tục quá 4 tiếng, không làm việc quá 10 tiếng/ngày.\n• Hàng siêu trường, siêu trọng: không thể tháo rời.\n• Hàng nguy hiểm: phải được cơ quan cấp phép.\n• Lái xe khách/buýt: đón trả khách đúng nơi quy định, không chở hàng nguy hiểm.\n• Người kinh doanh vận tải: “bồi thường thiệt hại nếu hàng hoá bị mất mát, hư hỏng”.\n• Hành khách: được miễn cước hành lý không quá 20 kg.",m:"4 giờ – 10 giờ · Siêu trọng không tháo rời · 20 kg",vd:"Câu 167–192"},
+{ch:"c2",t:"Ai là “thượng đế” trong câu hỏi vận tải?",b:"• Đầu câu có “Hành khách / Người thuê” → chọn đáp án 1.\n• Đầu câu có “Người kinh doanh” → chọn đáp án DÀI nhất (2 đáp án dài bằng nhau → chọn đáp án 1).\n• “Người nhận hàng”: hỏi quyền → ý 1, hỏi nghĩa vụ → ý 3.\n• Câu có “nhiệm vụ” → ý 1 · “chấp hành quy định / trách nhiệm” → đáp án cuối; có “cơ quan có thẩm quyền” → chọn luôn ý đó.",m:"Khách/Thuê → 1 · Kinh doanh → dài nhất",vd:"Câu 167–180"},
+{ch:"c2",t:"Văn hoá giao thông & tai nạn giao thông",b:"Đề có từ “văn hoá giao thông” hoặc “tai nạn giao thông”:\n• Có đáp án “Cả…” → chọn Cả.\n• Không có → chọn đáp án dài nhất.\nNgoại lệ: câu 186 chọn đáp án 2 — “Giảm tốc độ, chạy chậm qua vũng nước”.",m:"Văn hoá / tai nạn → Có cả chọn cả, không cả chọn dài.",vd:"Câu 182–205 (trừ 186)"},
+{ch:"c2",t:"Sơ cứu & cháy nổ — chọn ý bình tĩnh, an toàn",b:"• Vết thương chảy máu ngoài → chèn động mạch (garo phía trên vết thương).\n• Gặp “ngọn lửa, khói” → chọn đáp án 1: bình tĩnh, đưa xe sát vào lề đường…\n• Trong sa hình/phần chữ: ưu tiên đáp án chứa “an toàn”, “nhường đường”, “giảm tốc độ”.",m:"Chảy máu → chèn động mạch · Lửa khói → ý 1",vd:"Câu 188, 204"},
+/* ---- CHƯƠNG 3+4 ---- */
+{ch:"c34",t:"Kỹ thuật lái xe — bảng tra nhanh",b:"• Khởi hành ô tô: số tự động → đạp hết chân phanh, vào số; số cơ khí → đạp hết chân côn, vào số 1.\n• Nhả phanh tay: kéo cần về phía sau đồng thời bóp khoá hãm.\n• Lên/xuống dốc cao → về số thấp.\n• Xe tay ga để gây tai nạn → do chỉ dùng phanh trước.\n• Điều khiển tay ga an toàn: tăng ga từ từ, giảm ga thật nhanh.\n• Quay đầu an toàn: quay đầu với tốc độ thấp.\n• Tăng số: chọn đáp án 1 · Giảm số: chọn đáp án 2 (vù ga).",m:"Tăng 1 – Giảm 2 · Dốc cao → số thấp",vd:"Câu 214–269"},
+{ch:"c34",t:"Số tự động → chọn 1",b:"Câu hỏi có cụm từ “số tự động” → chọn đáp án 1.\nNhớ thêm: xe số tự động không dùng chân trái; khởi hành xe số tự động phải đạp hết hành trình bàn đạp phanh.",m:"Tự động → 1",vd:"Câu 207, 237, 239, 252, 290"},
+{ch:"c34",t:"Cấu tạo & sửa chữa — bảng tra cứu 16 dòng",b:"• Giảm thanh → bắt buộc • Kính chắn gió → kính an toàn\n• Động cơ không nổ → lẫn tạp chất • Dây đai an toàn → giữ chặt (hãm giật)\n• Động cơ 4 kỳ → pít-tông thực hiện 4 hành trình\n• Bôi trơn → cung cấp dầu bôi trơn / giảm ma sát\n• Động cơ → nhiệt năng thành cơ năng • Truyền lực → truyền mô-men quay\n• Ly hợp (côn) → truyền hoặc ngắt • Hộp số → chuyển động lùi\n• Hệ thống lái → thay đổi hướng • Hệ thống phanh → giảm tốc độ\n• Ắc quy → tích trữ điện năng • Máy phát điện → phát điện năng\n• Túi khí → hấp thụ, giảm va đập",m:"Phanh giảm tốc – Lái đổi hướng – Côn truyền/ngắt",vd:"Câu 266–304"},
+{ch:"c34",t:"Niên hạn sử dụng: tải 25 năm — chở người 20 năm",b:"• Ô tô tải (chở hàng): 25 năm.\n• Ô tô chở người trên 9 chỗ: 20 năm.\n• Ô tô chở người đến 9 chỗ: không có niên hạn.",m:"Tải 25 · Khách 20 · ≤9 chỗ: không niên hạn",vd:"Câu 277, 278, 283, 284"},
+{ch:"c34",t:"Đèn báo tap-lô cần biết",b:"• BRAKE + (!) → phanh tay đang hãm • Can dầu → thiếu dầu bôi trơn\n• Cửa mở → cửa đóng chưa chặt • Người + dây đỏ → chưa cài dây an toàn\n• Bình xăng → sắp hết nhiên liệu • Nhiệt kế → nước làm mát quá nóng\n• Hình động cơ → cần kiểm tra động cơ • (!) trong lốp → áp suất lốp không đủ\n• ABS → lỗi chống bó cứng phanh • Con đội → dùng kích/nâng xe • Búa → phá kính khẩn cấp",m:"Thấy ký hiệu → đọc đúng nghĩa, đừng đoán mò.",vd:"Phần ký hiệu cuối sách HLX"},
+/* ---- BIỂN BÁO ---- */
+{ch:"bien",t:"5 nhóm biển: Đỏ cấm – Vàng nguy – Xanh lệnh – Vuông chỉ",b:"• Biển CẤM: tròn, viền đỏ → không được đi vào.\n• Biển NGUY HIỂM: tam giác, viền đỏ nền vàng → giảm tốc độ.\n• Biển HIỆU LỆNH: tròn, nền xanh → bắt buộc phải theo.\n• Biển CHỈ DẪN: vuông/chữ nhật, nền xanh → hướng dẫn.\n• Biển PHỤ: bổ sung ý nghĩa cho biển chính.\nCâu nhớ: “Xanh tròn HIỆU LỆNH phải theo / Xanh vuông CHỈ DẪN những điều cần nghe.”",m:"Đỏ cấm · Vàng nguy · Xanh lệnh · Vuông chỉ",vd:"Câu 301–485"},
+{ch:"bien",t:"Quy luật cấm liên đới: cấm nhỏ thì cấm lớn",b:"Thứ tự xe: Xe con < Xe khách < Xe tải < Máy kéo < Đầu kéo (sơ mi rơ moóc).\n• Cấm xe NHỎ → cấm luôn xe lớn hơn.\n• Cấm xe LỚN → xe nhỏ vẫn được đi.\n• Cấm mô tô 2 bánh → cấm luôn xe 3 bánh; nhưng KHÔNG cấm xe gắn máy.\n• Biển phụ vẽ xe nào → cấm xe đó.",m:"Cấm nhỏ cấm lớn · Cấm lớn tha nhỏ",vd:"Câu 301–312"},
+{ch:"bien",t:"Cấm tải / xích lô / xe gắn máy → chọn đáp án cuối",b:"• Câu hỏi có chữ “cấm tải” → chọn đáp án cuối.\n• Gặp xe lam, xích lô → chọn đáp án cuối.\n• Đề có từ “xe gắn máy” → chọn đáp án cuối.\n• Đề có từ “kéo” → chọn “Biển 2 và 3” · từ “moóc” → chọn “Biển 1 và 2”.",m:"Tải – lam – gắn máy → cuối · Kéo → 2,3 · Moóc → 1,2",vd:"Câu 302, 303, 310, 311, 332, 333, 340–343"},
+{ch:"bien",t:"CẤM 1 — ĐƯỢC 3 (biển cấm mô tô & ô tô đi chung)",b:"Đọc câu hỏi: thấy từ “cấm” → chọn đáp án 1. Thấy từ “được” → chọn đáp án 3.",m:"Cấm 1 · Được 3",vd:"Câu 304, 306, 307"},
+{ch:"bien",t:"Biển cấm vượt: con vượt chọn 2, được vượt chọn 3, tải vượt chọn cuối",b:"Nhìn 2 chữ cuối câu hỏi:\n• “…con vượt / phép vượt” → chọn 2\n• “…được vượt” → chọn 3\n• “…tải vượt” → chọn đáp án cuối",m:"Con 2 · Được 3 · Tải cuối",vd:"Câu 308–312"},
+{ch:"bien",t:"3 biển tròn đỏ cấm rẽ/quành: có “và” chọn 2, không “và” chọn 1",b:"Gặp 3 hình tròn đỏ cấm rẽ, cấm quay đầu đi chung:\n• Câu hỏi có từ “và” → chọn 2 • Không có từ “và” → chọn 1\n(Bản tổng hợp khác: 3 biển mũi tên đen — có “và” → ý 3, còn lại → ý 1. Nhìn kỹ hình thuộc bộ nào.)",m:"Có và → 2 · Không và → 1",vd:"Câu 317–320"},
+{ch:"bien",t:"Ngày chẵn – ngày lẻ (cấm đỗ theo ngày)",b:"• Cuối câu hỏi “…ngày lẻ” → chọn 1.\n• Cuối câu hỏi “…ngày chẵn” → chọn 2.\nBiển cấm đỗ: 1 vạch chéo = cấm ĐỖ (được dừng); 2 vạch chéo (X) = cấm DỪNG và ĐỖ.",m:"Lẻ 1 · Chẵn 2 · 1 gạch đỗ – 2 gạch dừng đỗ",vd:"Câu 327, 328, 557, 558"},
+{ch:"bien",t:"Tốc độ tối đa (đỏ) ≠ tốc độ tối thiểu (xanh)",b:"• Vòng tròn viền ĐỎ ghi số → tốc độ TỐI ĐA cho phép.\n• Vòng tròn nền XANH ghi số → tốc độ TỐI THIỂU cho phép.\n• Biển 50 xanh có gạch chéo = hết hạn chế: có “và” → chọn ý có “và”; hỏi tối đa → 50, tối thiểu → 60, hết mọi lệnh cấm → chọn 2.",m:"Đỏ = trần · Xanh = sàn",vd:"Câu 335, 364, 366, 425–429, 435–439"},
+{ch:"bien",t:"Hình tròn 7t: 2 đáp án chọn 2 — 3 đáp án chọn 1",b:"Gặp bộ biển giới hạn tải trọng (3,5m – 7t – 10t):\n• Đề có 2 đáp án → chọn 2 • Đề có 3 đáp án → chọn 1.",m:"7t: hai → 2, ba → 1",vd:"Câu 336–339"},
+{ch:"bien",t:"Chiều dài hay khoảng cách? Nhìn mũi tên",b:"Biển phụ: CÓ mũi tên → chiều dài đoạn đường. KHÔNG mũi tên → khoảng cách đến đối tượng.\nVD: biển phụ 500m có mũi tên dưới biển cấm còi = chiều dài đoạn cấm bóp còi.",m:"Có tên → dài · Không tên → khoảng",vd:"Câu 347, 352, 353"},
+{ch:"bien",t:"3 người trong 3 hình: Nhường – Cấm – Dành",b:"Theo thứ tự trái → phải:\n• Tam giác vàng (người đi bộ) → NHƯỜNG đường\n• Tròn đỏ cấm (người đi bộ) → CẤM\n• Tròn xanh (người đi bộ) → DÀNH cho người đi bộ\nThấy 2 biển tam giác có hình người → chọn đáp án 2. Biển có 2 người đi chung → luôn chọn đáp án 2.",m:"Nhường – Cấm – Dành · 2 người → 2",vd:"Câu 367–369, 411–413"},
+{ch:"bien",t:"Đánh vần “Ư – Ư – Ư” & mẹo chữ V (dốc)",b:"• Mẹo đánh vần: lấy 6 chữ cuối câu hỏi, đếm có mấy vần “ư” → chọn đáp án số đó. VD câu “…đi ngược chiều qua đường hẹp?” có 2 “ư” → chọn 2.\n• Biển dốc: hình vẽ sườn dốc đi XUỐNG → dốc xuống; đi LÊN → dốc lên.",m:"Đếm ư → ra số · Vẽ xuống = xuống",vd:"Câu 389–391, 415, 416"},
+{ch:"bien",t:"Vạch kẻ đường: trắng cùng, vàng tim, đứt đè, liền cấm",b:"• Vạch TRẮNG → phân làn cùng chiều • Vạch VÀNG → phân chiều ngược chiều (tim đường)\n• Nét ĐỨT → được đè vạch, lấn làn • Nét LIỀN → không được đè\n• Vạch hình THOI → sắp đến vạch người đi bộ • Vạch chữ V / >> → xác định khoảng cách giữa các xe",m:"Trắng cùng – Vàng tim – Đứt đè – Liền cấm",vd:"Câu 477–483"},
+{ch:"bien",t:"Cầu vượt liên thông (chữ nhật, có chữ) ≠ cắt qua (tròn, không chữ)",b:"• Cầu vượt LIÊN THÔNG: biển vuông/chữ nhật, CÓ chữ (VD: Quốc lộ 1 – Hà Nội – Hoà Lạc).\n• Cầu vượt CẮT QUA: biển TRÒN xanh, KHÔNG chữ, đặt ở ngã ba/ngã tư.",m:"Có chữ → liên thông · Tròn trơn → cắt qua",vd:"Câu 434, 457–459, 462"},
+{ch:"bien",t:"Nhìn bóng đèn ô tô: thấy đèn = Có, không thấy = Không",b:"Câu hỏi dạng “xe tải và xe khách có được phép đi vào không?” kèm hình ô tô:\n• Nhìn thấy bóng đèn (xe nhìn trực diện) → chọn CÓ.\n• Không thấy bóng đèn (xe nhìn ngang) → chọn KHÔNG.",m:"Thấy đèn → Có · Khuất đèn → Không",vd:"Câu 462, 463"},
+{ch:"bien",t:"ZONE, biển 50 trắng & các biển “hết”",b:"• 3 biển ZONE: câu hỏi hỏi biển số mấy → chọn đáp án số đó.\n• Biển có gạch chéo = HẾT hiệu lực (hết cấm, hết đường ưu tiên, hết cao tốc…).\n• “Đường dành / bắt đầu” → chọn biển xanh; câu hỏi có chữ “hết” → chọn biển gạch chéo.",m:"ZONE số mấy → ý số đó · Gạch chéo = hết",vd:"Câu 445, 446"},
+{ch:"bien",t:"Biển nguy hiểm: Cộng cùng – Trừ ngược – Nhân vuông – Bằng hai",b:"• Dấu + → giao nhau đường ưu tiên / cùng cấp • Dấu − → cấm đi ngược chiều\n• Dấu × → giao vuông góc với đường sắt • Dấu = → giao nhau đường hai chiều\n• 1 gờ → gờ giảm tốc · 2 gờ → đường ổ gà (“1 gờ 2 gà”)\n• Nhóm chọn 1: đá lở – gia súc – lật xe – gió ngang – thi công – kè phía trước\n• Nhóm chọn 2: cửa chui – đường hầm – cầu hẹp – tai nạn – ùn tắc – đường trơn\n• Nhóm chọn 3: bến phà – cầu quay – kè bên trái",m:"Cộng cùng · Trừ ngược · Nhân vuông · Bằng hai",vd:"Phần biển nguy hiểm cuối tài liệu"},
+{ch:"bien",t:"Phân biệt biển dễ nhầm",b:"• Cấm xe GẮN MÁY: biển KHÔNG có hình người • Cấm MÔ TÔ: biển CÓ hình người.\n• Ô tô nhìn trực diện (2 mắt) = đường dành cho mọi ô tô · Ô tô nhìn từ sau = chỉ xe con.\n• Biển thoi vàng = đường ưu tiên cả đoạn dài · Biển tam giác “giao đường ưu tiên” = chỉ ưu tiên ở ngã tư trước mặt.\n• Đường hẹp: mũi tên đỏ to = phải NHƯỜNG xe ngược chiều · mũi tên xanh = được ƯU TIÊN qua trước.",m:"Gắn máy không người · Mô tô có người",vd:"Câu 403–405, 470–472"},
+/* ---- SA HÌNH ---- */
+{ch:"sa",t:"5 nguyên tắc sa hình: Giao – Ưu – Đường – Phải – Hướng",b:"Xét lần lượt, có bước nào dùng bước đó:\n1. GIAO: xe nào đã vào giao lộ trước → đi trước.\n2. ƯU: xe ưu tiên: Chữa cháy > Quân sự > Công an > Cứu thương.\n3. ĐƯỜNG: xe trên đường ưu tiên đi trước (thoi vàng = ưu tiên; tam giác ngược = nhường).\n4. PHẢI: tay phải trống (không vướng xe) → đi trước.\n5. HƯỚNG: Rẽ phải → Đi thẳng → Rẽ trái.",m:"Nhất giao – Nhì ưu – Tam đường – Tứ phải – Ngũ hướng",vd:"Câu 486–600"},
+{ch:"sa",t:"Sa hình có xe ưu tiên: hoả/quân/thương → đáp án 2",b:"• Hình có xe cứu hoả, xe quân sự hoặc xe cứu thương → chọn đáp án 2. Ngoại lệ: xe con A đã vào giao lộ trước (câu 493, 525, 591 → chọn 1).\n• Có 2 xe ưu tiên → chọn đáp án 2 (quân sự / chữa cháy đứng trước công an).\n• Chỉ có xe CÔNG AN: công an đi thẳng → đáp án 1; công an rẽ → đáp án 4 (đáp án nào có “xe công an” đứng đầu thì chọn).",m:"Hoả Quân Thương → 2 · Công an thẳng 1, rẽ 4",vd:"Câu 488, 489, 494–501, 532, 536, 540"},
+{ch:"sa",t:"“Xe nào được đi trước” → luôn chọn 2",b:"Câu hỏi sa hình dạng “Xe nào được đi trước?” → chọn đáp án 2.\nNgoại lệ duy nhất: câu 525 và 591 → chọn đáp án 1.\nCâu “Xe nào phải nhường?” → ưu tiên chọn theo thứ tự: xe khách → xe của bạn → xe con.",m:"Đi trước → 2 (trừ 525, 591 → 1)",vd:"Câu 492, 495, 498, 501, 506, 517"},
+{ch:"sa",t:"Xe đạp trong sa hình: cùng chiều 2 — khác chiều 3",b:"• Xe đạp đi CÙNG chiều với xe của bạn → chọn 2.\n• Xe đạp đi KHÁC chiều → chọn 3.",m:"Đạp cùng → 2 · Đạp khác → 3",vd:"Câu 572, 574, 577, 583, 593"},
+{ch:"sa",t:"Xe kéo xe trong hình = vi phạm / không đúng",b:"Thấy trong hình xe phía trước kéo theo xe phía sau → chọn đáp án “không đúng / vi phạm”. Chỉ áp dụng cho phần hình.",m:"Kéo xe → vi phạm",vd:"Câu 510, 515, 518"},
+{ch:"sa",t:"Đua xe: xe cuối cùng, đếm bánh trừ 1",b:"Hình có nhiều xe có tên (A, B, C…) đi cùng hướng như đua nhau, câu hỏi “vi phạm”:\n→ Nhìn xe CUỐI cùng, lấy số bánh xe trừ 1 = số đáp án.\nNgoại lệ: câu có từ “chấp hành” → chọn đáp án 2.",m:"Cuối – bánh – trừ 1",vd:"Câu 543, 548, 554, 566"},
+{ch:"sa",t:"Ngã tư 6 đèn & câu “chấp hành”",b:"• Câu hỏi có từ “chấp hành”: có “chỉ xe con” → chọn “chỉ xe con”; không có → chọn 2.\n• Không có “chấp hành”: nhìn mặt đường — có mũi tên đỏ → LOẠI đáp án có “xe con”; không có mũi tên đỏ → chọn đáp án có “xe con”.\n• Câu “vi phạm” nhiều mũi tên ngoằn ngoèo → chọn đáp án KHÔNG có “xe con” (xe con luôn chấp hành đúng).",m:"Chấp hành → xe con/2 · Vi phạm → né xe con",vd:"Câu 486, 500, 503, 538, 553, 560–565"},
+{ch:"sa",t:"Xe tải dừng đỗ trong hình: cùng chiều 1 — ngược chiều 3",b:"• Xe tải đỗ CÙNG chiều với xe khác → chọn đáp án 1.\n• Xe tải đỗ NGƯỢC chiều → chọn đáp án 3.\nGhi nhớ: “Cùng 1 — Ngược 3”.",m:"Cùng 1 · Ngược 3",vd:"Câu 505, 508, 509"},
+{ch:"sa",t:"Nhìn hình chọn đáp án 2 (nhóm mẹo hình ảnh)",b:"Chọn ngay đáp án 2 khi:\n• Thấy 2 bóng đèn sau của xe tải đi trước xe bạn.\n• Thấy xe con màu vàng bên phải.\n• Thấy xe tải bên trái + có ít nhất 1 biển báo trong hình.\n• Câu hỏi sa hình mà đáp án chứa “an toàn / nhường đường / giảm tốc độ” → ưu tiên chọn (trừ câu 4 ý → chọn 4).",m:"Đèn sau – vàng phải – tải trái có biển → 2",vd:"Câu 544, 547, 549, 552, 555, 572, 578, 581, 588"},
+{ch:"sa",t:"Vô lăng 3D + biển cấm dừng đỗ",b:"Hình nhìn từ buồng lái (vô lăng 3D) thấy biển cấm:\n• Biển cấm ĐỖ (1 gạch chéo) + có 3 xe → ý 3.\n• Biển cấm DỪNG ĐỖ (2 gạch chéo) + có 2 xe → ý 4.",m:"Đỗ 3 xe → 3 · Dừng đỗ 2 xe → 4",vd:"Phần sa hình — tài liệu A"},
+];
+/* ========= NGÂN HÀNG CÂU LUYỆN TẬP (soạn từ nội dung 2 tài liệu + quy định liên quan) ========= */
+const QUIZ=[
+{q:"Đáp án chứa cụm từ nào sau đây thì chọn ngay, gần như luôn đúng?",a:["Được phép tuỳ tình huống","Bị nghiêm cấm","Không nhất thiết tuân thủ","Chỉ áp dụng ban ngày"],c:1,e:"Mẹo vàng 1: thấy “Bị nghiêm cấm” → chọn ngay. Tương tự đáp án bắt đầu “Không được…” đúng 99%."},
+{q:"Câu trả lời cuối cùng dạng “Cả ý 1 và ý 2…” thì xử lý thế nào?",a:["Bỏ qua, chọn ý 1","Chọn đáp án cuối đó","Chọn ý ngắn nhất","Chọn đáp án 2"],c:1,e:"Mẹo “Cả”: đáp án cuối có “Cả ý…” → đúng khoảng 90%, ưu tiên chọn đáp án cuối."},
+{q:"Nhiều đáp án bắt đầu bằng “Quan sát…”, chọn đáp án nào?",a:["Đáp án ngắn nhất","Đáp án đầu tiên","Đáp án dài nhất","Đáp án cuối cùng"],c:2,e:"“Quan to quan bự”: quan dài là quan đúng. Bằng nhau thì chọn đáp án ở trên."},
+{q:"Câu hỏi bắt đầu bằng từ “Hành vi” → chọn đáp án nào?",a:["Đáp án 1","Đáp án 2","Đáp án cuối","Đáp án dài nhất"],c:2,e:"Mẹo 7 sách HLX: đầu câu có “Hành vi” → luôn chọn đáp án cuối."},
+{q:"Giữa câu hỏi có từ “gồm” → chọn đáp án nào?",a:["Ý 1","Ý 2","Đáp án “Cả ý 1 và ý 2”","Ý cuối cùng khác"],c:2,e:"Thấy “gồm” ở giữa câu hỏi → chọn Cả (câu 10, 11, 12)."},
+{q:"Khái niệm “Người điều khiển giao thông” là ai?",a:["Người lái xe","Cảnh sát giao thông","Người đi bộ","Thanh tra giao thông"],c:1,e:"Ráp cụm từ: người điều khiển giao thông → cảnh sát giao thông (câu 13)."},
+{q:"Vừa có biển cố định và biển tạm thời khác nhau, chấp hành biển nào?",a:["Biển cố định","Biển tạm thời","Biển nào cũng được","Hiệu lệnh CSGT là phụ"],c:1,e:"Chấp hành biển hiệu tạm thời (câu 39). Hiệu lệnh người điều khiển giao thông vẫn cao nhất."},
+{q:"Phần chữ: CSGT giơ 2 tay (đứng trên bục) → chọn đáp án mấy?",a:["Đáp án 2","Đáp án 3","Đáp án 4","Đáp án 1"],c:2,e:"Giơ 1 tay → 3, giơ 2 tay → 4. Sa hình có CSGT → luôn chọn 3."},
+{q:"Sử dụng còi trong đô thị được phép trong khung giờ nào?",a:["Từ 22h đến 5h","Từ 5h đến 22h","Cả ngày","Từ 6h đến 20h"],c:1,e:"Còi: 5 giờ → 22 giờ. Đêm 22h–5h chỉ báo hiệu bằng đèn."},
+{q:"Ban đêm (22h–5h), khi tránh xe ngược chiều phải làm gì?",a:["Giữ nguyên đèn pha","Bật đèn khẩn cấp","Chuyển từ đèn pha sang đèn chiếu gần","Tắt hết đèn"],c:2,e:"Đêm: chỉ dùng đèn cốt khi tránh nhau, không nhìn thẳng vào đèn xe ngược chiều."},
+{q:"Đỗ xe trên đường, xe cách lề đường/hè phố tối đa bao nhiêu?",a:["0,25 m","0,5 m","1 m","20 m"],c:0,e:"Con số thần thánh: đỗ cách lề không quá 0,25 m."},
+{q:"Đỗ xe trên đường phố hẹp phải cách xe đỗ bên kia đường tối thiểu?",a:["5 m","8 m","20 m","25 m"],c:2,e:"Đỗ cách xe đối diện tối thiểu 20 m trên đường hẹp."},
+{q:"Dừng xe trước đường sắt (nơi không có rào chắn) tối thiểu cách ray bao nhiêu?",a:["3 m","5 m","8 m","10 m"],c:1,e:"Dừng trước đường sắt tối thiểu 5 m. Biển phụ cự ly tối thiểu giữa hai xe là 8 m — đừng nhầm."},
+{q:"Xe có tốc độ thiết kế tối đa bao nhiêu thì KHÔNG được vào đường cao tốc?",a:["Dưới 50 km/h","Dưới 60 km/h","Dưới 70 km/h","Dưới 80 km/h"],c:2,liet:1,e:"Xe thiết kế dưới 70 km/h không được vào cao tốc."},
+{q:"Trên đường cao tốc, hành vi nào sau đây bị cấm tuyệt đối và thuộc nhóm điểm liệt?",a:["Đi vào làn khẩn cấp khi tắc đường","Lùi xe, quay đầu xe","Bật đèn khẩn cấp khi dừng khẩn cấp","Đi chậm ở làn phải"],c:1,liet:1,e:"Cao tốc: cấm lùi, cấm quay đầu, cấm đi ngược chiều — nhóm câu điểm liệt."},
+{q:"Người lái xe được lái liên tục tối đa bao lâu?",a:["2 giờ","4 giờ","8 giờ","10 giờ"],c:1,e:"Lái liên tục không quá 4 giờ; tổng thời gian làm việc không quá 10 giờ/ngày."},
+{q:"Hàng siêu trường, siêu trọng có đặc điểm gì?",a:["Tháo rời được từng phần","Không thể tháo rời","Chỉ chở ban đêm","Không cần giấy phép"],c:1,e:"Siêu trường siêu trọng → không thể tháo rời; hàng nguy hiểm phải được cơ quan cấp phép."},
+{q:"Hành khách được miễn cước hành lý tối đa bao nhiêu kg?",a:["10 kg","15 kg","20 kg","30 kg"],c:2,e:"Miễn cước hành lý không quá 20 kg."},
+{q:"Đầu câu hỏi có “Người kinh doanh vận tải” → chọn đáp án nào?",a:["Đáp án 1","Đáp án ngắn nhất","Đáp án dài nhất","Đáp án cuối"],c:2,e:"Kinh doanh → lý luận nhiều → chọn dài nhất. Hành khách/Người thuê → chọn đáp án 1."},
+{q:"Tốc độ tối đa của xe gắn máy (trong và ngoài khu dân cư)?",a:["40 km/h","50 km/h","60 km/h","70 km/h"],c:0,e:"Xe gắn máy, xe máy điện, xe máy chuyên dùng: 40 km/h ở mọi khu vực."},
+{q:"Trong khu đông dân cư, ô tô chạy đường đôi có dải phân cách giữa: tối đa?",a:["40 km/h","50 km/h","60 km/h","80 km/h"],c:2,e:"4 Máy – 5 Không – 6 Có: có dải phân cách → 60 km/h."},
+{q:"Trong khu đông dân cư, ô tô chạy đường 2 chiều không có dải phân cách: tối đa?",a:["40 km/h","50 km/h","60 km/h","70 km/h"],c:1,e:"Không dải phân cách → 50 km/h."},
+{q:"Ngoài khu đông dân cư, ô tô con chạy đường đôi: tối đa?",a:["70 km/h","80 km/h","90 km/h","100 km/h"],c:2,e:"Ô tô con ngoài dân cư: đường đôi 90, đường 2 chiều 80."},
+{q:"Ngoài khu đông dân cư, ô tô tải trên 3,5 tấn chạy đường 2 chiều: tối đa?",a:["60 km/h","70 km/h","80 km/h","90 km/h"],c:1,e:"Tải >3,5T ngoài dân cư: đôi 80 / hai chiều 70."},
+{q:"Xe chạy tốc độ 60–80 km/h, khoảng cách an toàn tối thiểu là?",a:["35 m","55 m","70 m","100 m"],c:1,e:"Mẹo: tốc độ lớn nhất − 30 → 80−30=50, chọn gần nhất 55 m (đáp án 2)."},
+{q:"Độ tuổi tối thiểu để học và thi hạng B2?",a:["16 tuổi","18 tuổi","21 tuổi","24 tuổi"],c:1,e:"B/B1/B2: 18 tuổi. Sau đó cộng 3: C 21, D 24, E 27."},
+{q:"Tuổi tối đa của người lái xe hạng E?",a:["Nam 55, nữ 50","Nam 60, nữ 55","Nam 50, nữ 55","Không giới hạn"],c:0,e:"Hạng E: nam tối đa 55 tuổi, nữ tối đa 50 tuổi."},
+{q:"GPLX hạng B2 được lái xe nào?",a:["Ô tô đến 9 chỗ, tải dưới 3,5T, được hành nghề","Ô tô đến 9 chỗ, không hành nghề","Ô tô trên 30 chỗ","Chỉ ô tô số tự động"],c:0,e:"B1 mới là “không hành nghề”. B2: đến 9 chỗ + tải dưới 3,5T + được hành nghề."},
+{q:"Hạng FE chọn đáp án mấy, hạng FC chọn đáp án mấy?",a:["FE 2 – FC 1","FE 1 – FC 2","Cả hai chọn 1","Cả hai chọn cuối"],c:1,e:"Em 1 (FE) – Chị 2 (FC): E là em nhỏ chọn 1, C là chị lớn chọn 2."},
+{q:"Niên hạn sử dụng ô tô tải và ô tô chở người trên 9 chỗ lần lượt là?",a:["20 năm – 25 năm","25 năm – 20 năm","Đều 20 năm","Đều 25 năm"],c:1,e:"Tải 25 năm · Chở người trên 9 chỗ 20 năm · Đến 9 chỗ không niên hạn."},
+{q:"Câu hỏi có cụm từ “số tự động” → chọn đáp án mấy?",a:["Đáp án 1","Đáp án 2","Đáp án 3","Đáp án cuối"],c:0,e:"Mẹo 17: “số tự động” → chọn 1. Khởi hành xe tự động: đạp hết chân phanh rồi vào số."},
+{q:"Khởi hành xe ô tô số cơ khí (số sàn) đúng cách?",a:["Đạp hết chân phanh, vào số 1","Đạp hết chân côn (ly hợp), vào số 1","Tăng ga mạnh rồi nhả côn nhanh","Vào số 2 để đi êm"],c:1,e:"Số cơ khí: đạp hết côn, vào số 1. Số tự động: đạp hết phanh, vào số."},
+{q:"Động cơ diesel không nổ, nguyên nhân hay gặp trong bộ đề?",a:["Hết nhiên liệu","Nhiên liệu lẫn tạp chất","Ắc quy yếu","Bugi hỏng"],c:1,e:"Bảng cấu tạo: động cơ không nổ → nhiên liệu lẫn tạp chất."},
+{q:"Công dụng của hệ thống phanh?",a:["Thay đổi hướng chuyển động","Truyền mô-men quay","Giảm tốc độ","Tích trữ điện năng"],c:2,e:"Phanh → giảm tốc độ. Lái → thay đổi hướng. Truyền lực → truyền mô-men. Ắc quy → tích trữ điện."},
+{q:"Kính chắn gió ô tô là loại kính gì?",a:["Kính cường lực thường","Kính an toàn","Kính cách nhiệt","Kính chống đạn"],c:1,e:"Kính chắn gió → kính an toàn."},
+{q:"Âm lượng còi xe cho phép tối đa bao nhiêu?",a:["90 dB(A)","100 dB(A)","115 dB(A)","125 dB(A)"],c:2,e:"Còi từ 90–115 dB(A) → mẹo chọn số 115."},
+{q:"Xe kéo xe khác mà xe bị kéo không có hệ thống hãm thì phải dùng gì?",a:["Dây cáp mềm","Thanh nối cứng","Xích sắt","Kéo bằng xe cứu hộ là đủ"],c:1,e:"Không có hãm → dùng thanh nối cứng. “Thanh nối cứng” thấy trong đáp án là chọn ngay."},
+{q:"Điều khiển xe sau khi uống rượu bia: quy định thế nào?",a:["Được lái nếu dưới ngưỡng cho phép","Bị nghiêm cấm tuyệt đối","Chỉ cấm trên cao tốc","Chỉ cấm ban đêm"],c:1,liet:1,e:"Nồng độ cồn: cấm tuyệt đối khi lái xe — câu điểm liệt kinh điển."},
+{q:"Biển tròn viền đỏ ghi số 50 và biển tròn xanh ghi số 60 khác nhau thế nào?",a:["Đỏ là tối thiểu, xanh là tối đa","Đỏ là tốc độ tối đa, xanh là tốc độ tối thiểu","Cả hai là tối đa","Cả hai là tối thiểu"],c:1,e:"Đỏ = trần (tối đa) · Xanh = sàn (tối thiểu)."},
+{q:"Biển cấm ô tô con thì các xe nào cũng bị cấm theo?",a:["Chỉ xe con bị cấm","Xe tải, máy kéo, đầu kéo cũng bị cấm","Mô tô cũng bị cấm","Không xe nào khác"],c:1,e:"Cấm nhỏ thì cấm lớn: con → khách → tải → máy kéo → đầu kéo. Mô tô/xe gắn máy không áp dụng liên đới này."},
+{q:"Câu hỏi biển báo có chữ “cấm tải” → chọn đáp án nào?",a:["Đáp án 1","Đáp án 2","Đáp án cuối","Đáp án có chữ “cả”"],c:2,e:"Cấm tải / xe lam / xích lô / xe gắn máy → chọn đáp án cuối."},
+{q:"Biển nào cấm xe gắn máy, biển nào cấm mô tô?",a:["Gắn máy có hình người, mô tô không người","Gắn máy KHÔNG hình người, mô tô CÓ hình người","Giống nhau hoàn toàn","Đều có hình người"],c:1,e:"Phân biệt kinh điển: cấm gắn máy = không người; cấm mô tô = có người ngồi."},
+{q:"Cấm đỗ xe ngày lẻ chọn đáp án mấy, ngày chẵn chọn mấy?",a:["Lẻ 2 – Chẵn 1","Lẻ 1 – Chẵn 2","Đều chọn 1","Đều chọn cuối"],c:1,e:"Ngày lẻ → 1 · Ngày chẵn → 2."},
+{q:"Vạch vàng và vạch trắng khác nhau thế nào?",a:["Vàng phân làn, trắng phân chiều","Vàng phân chiều (ngược chiều), trắng phân làn (cùng chiều)","Vàng cho cao tốc, trắng cho đô thị","Không khác nhau"],c:1,e:"Trắng cùng – Vàng tim. Nét đứt được đè, nét liền không được đè."},
+{q:"Cầu vượt liên thông nhận biết bằng gì?",a:["Biển tròn xanh không chữ","Biển vuông/chữ nhật có chữ","Biển tam giác vàng","Biển tròn đỏ"],c:1,e:"Liên thông → có chữ. Cắt qua → tròn, không chữ."},
+{q:"Vào vòng xuyến CÓ biển báo vòng xuyến thì nhường xe phía nào?",a:["Bên phải","Bên trái","Xe nhỏ","Xe đi thẳng"],c:1,e:"Có biển → nhường trái. Không biển → nhường phải."},
+{q:"Thứ tự xe ưu tiên đúng trong sa hình?",a:["Công an > Quân sự > Chữa cháy > Cứu thương","Chữa cháy > Quân sự > Công an > Cứu thương","Cứu thương > Chữa cháy > Công an > Quân sự","Quân sự > Chữa cháy > Cứu thương > Công an"],c:1,e:"Hoả – Quân – Công – Thương: chữa cháy cao nhất."},
+{q:"Sa hình: sau xe ưu tiên và đường ưu tiên, xét hướng đi theo thứ tự nào?",a:["Rẽ trái → thẳng → rẽ phải","Rẽ phải → đi thẳng → rẽ trái","Đi thẳng → rẽ phải → rẽ trái","Rẽ phải → rẽ trái → thẳng"],c:1,e:"Hướng: phải trước, thẳng nhì, trái cuối."},
+{q:"Sa hình chỉ có 1 xe công an đi thẳng → chọn đáp án mấy?",a:["Đáp án 1","Đáp án 2","Đáp án 3","Đáp án cuối"],c:0,e:"Công an đi thẳng → 1; công an rẽ → 4 (chọn đáp án có “xe công an” đứng đầu)."},
+{q:"Câu sa hình hỏi “Xe nào được đi trước?” → chọn đáp án mấy?",a:["Đáp án 1","Đáp án 2","Đáp án 3","Đáp án dài nhất"],c:1,e:"Luôn chọn 2, trừ câu 525 và 591 chọn 1."},
+{q:"Trong sa hình, xe đạp đi cùng chiều với xe của bạn → chọn đáp án mấy?",a:["Đáp án 1","Đáp án 2","Đáp án 3","Đáp án 4"],c:1,e:"Đạp cùng chiều → 2 · Đạp khác chiều → 3."},
+{q:"Hình sa hình thấy xe trước kéo theo xe sau → kết luận?",a:["Đúng quy định","Không đúng / vi phạm","Được phép nếu đi chậm","Chỉ sai khi vào cao tốc"],c:1,e:"Xe kéo xe trong hình = vi phạm (chỉ áp dụng phần hình)."},
+{q:"Sử dụng GPLX đã báo mất để lái xe thì bị xử lý thế nào?",a:["Phạt tiền là xong","5 năm không được cấp GPLX","Thu hồi 1 năm","Không bị xử lý"],c:1,liet:1,e:"Dùng bằng đã báo mất / gian dối: 5 năm không được cấp GPLX."},
+];
+/* ========= TRA CỨU ========= */
+const LOOKUP_HTML=`
+<div class="card"><h3>🚀 Bảng tốc độ tối đa cho phép (km/h)</h3>
+<table><tr><th>Loại xe / đường</th><th>Đường đôi, 1 chiều ≥2 làn</th><th>Đường 2 chiều, 1 làn</th></tr>
+<tr><td colspan="3"><b>TRONG khu vực đông dân cư</b></td></tr>
+<tr><td>Xe gắn máy, máy điện, máy chuyên dùng</td><td>40</td><td>40</td></tr>
+<tr><td>Các loại xe còn lại</td><td>60</td><td>50</td></tr>
+<tr><td colspan="3"><b>NGOÀI khu vực đông dân cư</b></td></tr>
+<tr><td>Ô tô con, ô tô ≤30 chỗ, tải &lt;3,5T</td><td>90</td><td>80</td></tr>
+<tr><td>Ô tô &gt;30 chỗ, tải &gt;3,5T</td><td>80</td><td>70</td></tr>
+<tr><td>Mô tô, xe buýt, đầu kéo, ô tô chuyên dùng</td><td>70</td><td>60</td></tr>
+<tr><td>Kéo rơ moóc, trộn vữa/bê tông, xi téc</td><td>60</td><td>50</td></tr>
+<tr><td>Xe gắn máy &amp; tương tự</td><td>40</td><td>40</td></tr></table>
+<p class="note" style="margin-top:8px">Mẹo nhớ: <b>4 Máy – 5 Không – 6 Có</b> (trong dân cư) · <b>Téc – Tông – Con</b> (ngoài dân cư).</p></div>
+<div class="card"><h3>📏 Khoảng cách an toàn tối thiểu</h3>
+<table><tr><th>Tốc độ (km/h)</th><th>Khoảng cách (m)</th></tr>
+<tr><td>≤ 60</td><td>35</td></tr><tr><td>Trên 60 – 80</td><td>55</td></tr>
+<tr><td>Trên 80 – 100</td><td>70</td></tr><tr><td>Trên 100 – 120</td><td>100</td></tr></table>
+<p class="note" style="margin-top:8px">Mẹo làm bài: lấy tốc độ lớn nhất trong đề <b>trừ 30</b> → chọn đáp án gần nhất.</p></div>
+<div class="card"><h3>🎂 Độ tuổi &amp; hạng GPLX</h3>
+<table><tr><th>Hạng</th><th>Tuổi</th><th>Được lái</th></tr>
+<tr><td>A1</td><td>18</td><td>Mô tô dưới 175cc; xe 3 bánh cho người khuyết tật</td></tr>
+<tr><td>A2</td><td>18</td><td>Mô tô từ 175cc trở lên</td></tr>
+<tr><td>A3</td><td>18</td><td>Mô tô 3 bánh</td></tr>
+<tr><td>B1</td><td>18</td><td>Đến 9 chỗ, tải dưới 3,5T — KHÔNG hành nghề</td></tr>
+<tr><td>B2</td><td>18</td><td>Đến 9 chỗ, tải dưới 3,5T — được hành nghề</td></tr>
+<tr><td>C</td><td>21</td><td>Đến 9 chỗ, tải trên 3,5T</td></tr>
+<tr><td>D</td><td>24</td><td>Đến 30 chỗ</td></tr>
+<tr><td>E</td><td>27</td><td>Trên 30 chỗ (tối đa: nam 55, nữ 50)</td></tr>
+<tr><td>FB2</td><td>21</td><td>B2 kéo rơ moóc</td></tr>
+<tr><td>FC</td><td>24</td><td>Đầu kéo sơ mi rơ moóc → chọn đáp án 2</td></tr>
+<tr><td>FE</td><td>27</td><td>Ô tô khách nối toa → chọn đáp án 1</td></tr></table>
+<p class="note" style="margin-top:8px">Tuổi cộng 3: <b>18 – 21 – 24 – 27</b> · Xe gắn máy dưới 50cc: đủ 16 tuổi.</p></div>
+<div class="card"><h3>🔢 Các con số cần nhớ</h3>
+<table><tr><th>Tình huống</th><th>Con số</th></tr>
+<tr><td>Đỗ cách lề đường</td><td>0,25 m</td></tr>
+<tr><td>Đỗ cách xe đối diện (đường hẹp)</td><td>20 m</td></tr>
+<tr><td>Dừng trước đường sắt</td><td>5 m</td></tr>
+<tr><td>Cự ly tối thiểu giữa 2 xe (biển phụ)</td><td>8 m</td></tr>
+<tr><td>Lái xe liên tục / trong ngày</td><td>4 giờ / 10 giờ</td></tr>
+<tr><td>Hành lý miễn cước</td><td>20 kg</td></tr>
+<tr><td>Báo tàu dừng lại</td><td>500 m</td></tr>
+<tr><td>Âm lượng còi</td><td>90–115 dB(A)</td></tr>
+<tr><td>Niên hạn ô tô tải / chở người &gt;9 chỗ</td><td>25 năm / 20 năm</td></tr>
+<tr><td>Dùng GPLX đã báo mất</td><td>5 năm không cấp lại</td></tr>
+<tr><td>Xe thiết kế tối đa vào cao tốc</td><td>Từ 70 km/h trở lên</td></tr></table></div>
+<div class="card"><h3>🚦 Thứ tự ưu tiên sa hình</h3>
+<ul class="tight">
+<li><b>Bước 1 — Giao lộ:</b> xe vào giao lộ trước đi trước.</li>
+<li><b>Bước 2 — Xe ưu tiên:</b> Chữa cháy → Quân sự → Công an → Cứu thương.</li>
+<li><b>Bước 3 — Đường ưu tiên:</b> thoi vàng = ưu tiên; tam giác ngược = phải nhường.</li>
+<li><b>Bước 4 — Tay phải trống</b> thì đi trước.</li>
+<li><b>Bước 5 — Hướng:</b> Rẽ phải → Đi thẳng → Rẽ trái.</li></ul></div>
+<div class="card"><h3>📚 Áp mẹo theo chương (mục lục sách HLX)</h3>
+<ul class="tight">
+<li>Chương 1 (câu 1–180): mẹo 1–14 · Chương 2 (181–205): mẹo 15, 7, 3, 4</li>
+<li>Chương 3 (206–263): mẹo 16, 6, 4, 7, 8, 10 · Chương 4 (264–300): mẹo 6, 18, 7, 8, 17</li>
+<li>Chương 5 (301–485): mẹo 19–45 · Chương 6 (486–600): mẹo 46–59, 9</li></ul>
+<p class="note">Thi thật hạng B2: 35 câu trong 22 phút, đạt từ 32/35 và không sai câu điểm liệt.</p></div>`;
+/* ========= LOGIC ========= */
+const LS="meoB2_v1_";
+let learned=new Set(JSON.parse(localStorage.getItem(LS+"learned")||"[]"));
+let theme=localStorage.getItem(LS+"theme")||"orange";
+let curChap="all", onlyNew=false, flashIdx=0, flashOn=false;
+const $=s=>document.querySelector(s);
+function saveLearned(){localStorage.setItem(LS+"learned",JSON.stringify([...learned]));updateProg();}
+function chapName(id){const c=CHAPS.find(x=>x.id===id);return c?c.name.replace(/^.*?· /,""):"";}
+function filteredTips(){const q=($("#q").value||"").trim().toLowerCase();return TIPS.map((t,i)=>({...t,idx:i})).filter(t=>(curChap==="all"||t.ch===curChap)&&(!onlyNew||!learned.has(t.idx))&&(!q||(t.t+" "+t.b+" "+(t.m||"")).toLowerCase().includes(q)));}
+function renderChips(){$("#chapChips").innerHTML=`<button class="chip ${curChap==="all"?"on":""}" onclick="setChap('all')">Tất cả</button>`+CHAPS.map(c=>`<button class="chip ${curChap===c.id?"on":""}" onclick="setChap('${c.id}')">${c.name.split("·")[0].trim()||c.name}</button>`).join("");}
+function setChap(id){curChap=id;renderChips();renderTips();}
+function toggleOnlyNew(){onlyNew=!onlyNew;$("#btnNew").textContent=onlyNew?"Đang lọc: chưa thuộc (bấm để tắt)":"Chỉ xem chưa thuộc";renderTips();}
+function renderTips(){const list=filteredTips();$("#flashBox").innerHTML="";flashOn=false;$("#tipList").innerHTML=list.length?list.map(t=>tipCard(t)).join(""):`<div class="card"><p>Không có thẻ nào khớp. ${onlyNew?"Bạn đã thuộc hết phần này rồi 🎉":"Thử từ khoá khác nhé."}</p></div>`;}
+function tipCard(t){const done=learned.has(t.idx);return `<article class="tip ${done?"learned":""}">
+<div class="tip-h"><h4>${t.t}</h4><span class="tag">${chapName(t.ch)}</span></div>
+<div class="tip-b">${t.b}</div>
+${t.m?`<div class="mnemo">🧠 <b>Ghi nhớ:</b> ${t.m}</div>`:""}
+<div class="tip-f"><span class="vd">Áp dụng: ${t.vd||""}</span><button class="chk ${done?"done":""}" onclick="toggleLearn(${t.idx})">${done?"✓ Đã thuộc":"Đánh dấu đã thuộc"}</button></div></article>`;}
+function toggleLearn(i){learned.has(i)?learned.delete(i):learned.add(i);saveLearned();if(flashOn){renderFlash();}else{renderTips();}}
+function startFlash(){const list=filteredTips();if(!list.length)return;flashOn=true;flashIdx=0;$("#tipList").innerHTML="";renderFlash();}
+function renderFlash(){const list=filteredTips();if(!list.length){$("#flashBox").innerHTML="";return;}flashIdx=Math.max(0,Math.min(flashIdx,list.length-1));const t=list[flashIdx];
+$("#flashBox").innerHTML=`<div class="card flash"><div class="tip-h"><h4>${t.t}</h4><span class="tag">Thẻ ${flashIdx+1}/${list.length}</span></div>
+<div class="tip-b">${t.b}</div>${t.m?`<div class="mnemo">🧠 <b>Ghi nhớ:</b> ${t.m}</div>`:""}
+<div class="rowbtns"><button class="btn gray" onclick="flashMove(-1)">← Trước</button>
+<button class="btn ${learned.has(t.idx)?"gray":""}" onclick="toggleLearn(${t.idx})">${learned.has(t.idx)?"✓ Đã thuộc":"Đánh dấu đã thuộc"}</button>
+<button class="btn" onclick="flashMove(1)">Tiếp →</button></div>
+<button class="btn ghost" style="margin-top:8px" onclick="renderTips()">Xem dạng danh sách</button></div>`;}
+function flashMove(d){flashIdx+=d;renderFlash();}
+function updateProg(){const pct=TIPS.length?Math.round(learned.size/TIPS.length*100):0;$("#hdPct").textContent=pct+"%";$("#homeBar").style.width=pct+"%";$("#homeProgTxt").textContent=`Đã thuộc ${learned.size}/${TIPS.length} thẻ mẹo. `+(pct>=80?"Sẵn sàng thi thử rồi, giữ phong độ nhé!":pct>=40?"Tốt, học tiếp phần biển báo & sa hình là chắc nhất.":"Mỗi ngày thuộc 5 thẻ là 1 tuần xong hết.");$("#stTips").textContent=TIPS.length;
+$("#chapList").innerHTML=CHAPS.map(c=>{const all=TIPS.map((t,i)=>({...t,idx:i})).filter(t=>t.ch===c.id);const dn=all.filter(t=>learned.has(t.idx)).length;const p=all.length?Math.round(dn/all.length*100):0;return `<div style="padding:9px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-size:14px">${c.name}</b><span class="note">${dn}/${all.length}</span></div><div class="note">${c.range}</div><div class="pbar" style="margin-top:6px"><i style="width:${p}%"></i></div></div>`;}).join("");}
+/* ---- Quiz luyện tập ---- */
+let quizSet=[],quizI=0,quizScore=0,quizAnswered=false;
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startQuiz(){quizSet=shuffle(QUIZ).slice(0,10);quizI=0;quizScore=0;renderQuiz();}
+function renderQuiz(){const box=$("#quizBox");if(quizI>=quizSet.length){box.innerHTML=`<div class="card kq"><p>Kết quả luyện tập</p><div class="big ${quizScore>=8?"pass":"fail"}">${quizScore}/10</div><p>${quizScore>=8?"Rất chắc tay! Thử sức với Thi thử 35 câu nhé.":quizScore>=5?"Khá ổn — ôn lại các thẻ mẹo của câu sai rồi làm lại.":"Đừng nản, quay lại Học mẹo thuộc vài thẻ rồi luyện tiếp."}</p><div class="rowbtns"><button class="btn" onclick="startQuiz()">🔁 Luyện tiếp 10 câu</button><button class="btn ghost" onclick="startExam()">📝 Thi thử</button></div></div>`;return;}
+const q=quizSet[quizI];quizAnswered=false;
+box.innerHTML=`<div class="qbox"><span class="qn">LUYỆN TẬP · Câu ${quizI+1}/10 · Đúng: ${quizScore}</span>${q.liet?'<span class="liet">ĐIỂM LIỆT</span>':""}<h3>${q.q}</h3><div id="opts">${q.a.map((x,i)=>`<button class="opt" onclick="answerQuiz(${i})">${i+1}. ${x}</button>`).join("")}</div><div id="exp"></div></div>`;}
+function answerQuiz(i){if(quizAnswered)return;quizAnswered=true;const q=quizSet[quizI];const right=i===q.c;if(right)quizScore++;document.querySelectorAll("#opts .opt").forEach((el,j)=>{if(j===q.c)el.classList.add("right");else if(j===i)el.classList.add("wrong");el.disabled=true;});
+$("#exp").innerHTML=`<div class="exp">${right?"✅ <b>Đúng!</b>":"❌ <b>Sai.</b> Đáp án đúng: <b>"+(q.c+1)+". "+q.a[q.c]+"</b>"}<br>${q.e}</div><button class="btn" onclick="quizI++;renderQuiz()">${quizI>=quizSet.length-1?"Xem kết quả":"Câu tiếp theo →"}</button>`;}
+/* ---- Thi thử ---- */
+let examSet=[],examAns=[],examI=0,examTimer=null,examLeft=22*60,examDone=false;
+function startExam(){go("exam");examSet=shuffle(QUIZ).slice(0,35);examAns=Array(35).fill(-1);examI=0;examLeft=22*60;examDone=false;clearInterval(examTimer);examTimer=setInterval(()=>{examLeft--;if(examLeft<=0){submitExam();}else{const el=$("#tmr");if(el)el.textContent=fmtTime(examLeft);}},1000);renderExam();}
+function fmtTime(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+function renderExam(){const box=$("#examBox");if(examDone)return;const q=examSet[examI];if(!q){submitExam();return;}
+box.innerHTML=`<div class="qbox"><div style="display:flex;justify-content:space-between;align-items:center"><span class="qn">THI THỬ B2 · Câu ${examI+1}/35</span><span class="timer" id="tmr">⏱ ${fmtTime(examLeft)}</span></div>
+<h3>${q.q}${q.liet?'<span class="liet">ĐIỂM LIỆT</span>':""}</h3>
+${q.a.map((x,i)=>`<button class="opt ${examAns[examI]===i?"pick":""}" onclick="examPick(${i})">${i+1}. ${x}</button>`).join("")}
+<div class="rowbtns"><button class="btn gray" onclick="examMove(-1)">← Trước</button><button class="btn gray" onclick="examMove(1)">Tiếp →</button></div>
+<button class="btn" style="margin-top:10px" onclick="submitExam()">Nộp bài</button>
+<div class="examgrid">${examSet.map((x,i)=>`<button class="${examAns[i]>=0?"did":""} ${i===examI?"cur":""}" onclick="examI=${i};renderExam()">${i+1}</button>`).join("")}</div>
+<p class="note" style="margin-top:8px">Đậu khi đúng từ 32/35 và không sai câu điểm liệt. Còn ${examAns.filter(x=>x<0).length} câu chưa làm.</p></div>`;}
+function examPick(i){examAns[examI]=i;renderExam();}
+function examMove(d){examI=Math.max(0,Math.min(34,examI+d));renderExam();}
+function submitExam(){if(examDone)return;examDone=true;clearInterval(examTimer);let score=0,lietWrong=[];examSet.forEach((q,i)=>{if(examAns[i]===q.c)score++;else if(q.liet)lietWrong.push(i+1);});
+const pass=score>=32&&lietWrong.length===0;const best=+(localStorage.getItem(LS+"best")||0);if(score>best)localStorage.setItem(LS+"best",score);
+$("#examBox").innerHTML=`<div class="card kq"><p>Kết quả thi thử</p><div class="big ${pass?"pass":"fail"}">${score}/35</div>
+<p style="font-size:18px;font-weight:800" class="${pass?"pass":"fail"}">${pass?"🎉 ĐẬU":"❌ CHƯA ĐẬU"}</p>
+${lietWrong.length?`<p style="color:var(--bad)"><b>Sai câu điểm liệt số: ${lietWrong.join(", ")}</b> — thi thật là rớt ngay dù đủ điểm.</p>`:""}
+${score<32?`<p>Cần đúng tối thiểu 32/35. Bạn còn thiếu ${32-score} câu.</p>`:""}
+<p class="note">Điểm thi thử cao nhất của bạn: ${Math.max(best,score)}/35</p>
+<div class="rowbtns"><button class="btn" onclick="reviewExam()">Xem lại đáp án</button><button class="btn ghost" onclick="startExam()">Thi lại đề mới</button></div></div>`;}
+function reviewExam(){$("#examBox").innerHTML=examSet.map((q,i)=>`<div class="qbox" style="margin-bottom:10px"><span class="qn">Câu ${i+1}${q.liet?' · ĐIỂM LIỆT':""} — ${examAns[i]===q.c?"✅ Đúng":"❌ Sai"}</span><h3>${q.q}</h3>${q.a.map((x,j)=>`<div class="opt ${j===q.c?"right":""} ${j===examAns[i]&&j!==q.c?"wrong":""}">${j+1}. ${x}</div>`).join("")}<div class="exp">${q.e}</div></div>`).join("")+`<button class="btn" onclick="startExam()">Thi lại đề mới</button>`;}
+/* ---- Điều hướng & theme ---- */
+function go(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$("#v-"+v).classList.add("on");document.querySelectorAll("nav.tabbar button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));window.scrollTo({top:0});if(v==="quiz"&&!quizSet.length)startQuiz();if(v==="exam"&&!examSet.length)$("#examBox").innerHTML=`<div class="card"><h3>📝 Thi thử B2 như thi thật</h3><ul class="tight"><li>35 câu · 22 phút · Đậu từ 32 câu</li><li>Sai 1 câu điểm liệt là rớt ngay</li><li>Đề rút ngẫu nhiên từ ngân hàng câu luyện tập của app</li></ul><button class="btn" onclick="startExam()">Bắt đầu thi</button></div>`;if(v==="lookup")$("#lookupBox").innerHTML=LOOKUP_HTML;}
+const THEMES={orange:["#f56300","#ff8a3d"],blue:["#0866ff","#3d8bff"],green:["#1a9e54","#2fbf71"],red:["#e03131","#ff5c5c"]};
+function setTheme(t){theme=t;localStorage.setItem(LS+"theme",t);applyTheme();}
+function applyTheme(){const[m,m2]=THEMES[theme]||THEMES.orange;document.documentElement.style.setProperty("--main",m);document.documentElement.style.setProperty("--main2",m2);document.querySelectorAll(".theme-dot").forEach(d=>d.classList.toggle("on",d.dataset.th===theme));}
+/* ---- Khởi tạo ---- */
+document.getElementById("lookupBox").innerHTML=LOOKUP_HTML;
+renderChips();renderTips();applyTheme();updateProg();
+</script>
+</body>
+</html>
