@@ -91,6 +91,18 @@ th{background:#fff4ec}
 .theme-dot{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px #ccc;flex:none}
 .theme-dot.on{box-shadow:0 0 0 3px var(--txt)}
 ul.tight{padding-left:20px}ul.tight li{margin-bottom:5px;font-size:14px}
+.tipimg{width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px;display:block}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:900px){.gal{grid-template-columns:repeat(3,1fr)}}
+.gal figure{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.gal img{width:100%;height:150px;object-fit:cover;object-position:top;display:block}
+.gal figcaption{font-size:12.5px;font-weight:600;padding:8px 10px;line-height:1.35}
+#lb{position:fixed;inset:0;z-index:99;background:rgba(0,0,0,.93);display:none;flex-direction:column}
+#lb.on{display:flex}
+#lb .lb-h{color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:14px;font-weight:600;gap:10px}
+#lb .lb-h button{color:#fff;font-size:26px;line-height:1;padding:4px 10px}
+#lb .lb-b{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center}
+#lb img{max-width:100%;height:auto;display:block}
 </style>
 </head>
 <body>
@@ -145,7 +157,11 @@ ul.tight{padding-left:20px}ul.tight li{margin-bottom:5px;font-size:14px}
       <button class="theme-dot" data-th="red" style="background:#e03131" onclick="setTheme('red')" aria-label="Đỏ"></button>
     </div>
   </div>
-  <p class="note" style="text-align:center">Nội dung mẹo trích từ 2 tài liệu: “Mẹo học luật giao thông 600 câu” &amp; “Sách mẹo 600 câu lý thuyết (HLX)”. App chạy offline, tiến độ lưu ngay trên máy này.</p>
+  <div class="card" style="border-color:var(--warn);background:#fffaf0">
+    <h3>🆕 Lưu ý quan trọng: bộ đề đã đổi từ 2025</h3>
+    <p style="font-size:14px">Từ 2025, kỳ thi dùng <b>bộ 600 câu mới của Cục CSGT</b> với phân hạng GPLX mới (A1 đến 125cc, thêm C1/D1/D2, điểm GPLX 12 điểm…). Mục <b>“Mẹo BỘ ĐỀ 2025”</b> ở phần Học mẹo là phần cần học chính. Các mục còn lại trích từ 2 tài liệu PDF cũ — chỉ tham khảo, một số con số đã khác (tuổi, hạng bằng, khoảng cách).</p>
+  </div>
+  <p class="note" style="text-align:center">Nguồn: 13 mẹo bộ 2025 tóm tắt từ <a href="https://taplaixe.vn/meo-thi-ly-thuyet-lai-xe" target="_blank" rel="noopener">taplaixe.vn</a> · Phần còn lại trích từ 2 tài liệu PDF “Mẹo học luật giao thông 600 câu” &amp; “Sách mẹo 600 câu lý thuyết (HLX)”. Tiến độ học lưu ngay trên máy này.</p>
 </section>
 
 <!-- LEARN -->
@@ -177,6 +193,8 @@ ul.tight{padding-left:20px}ul.tight li{margin-bottom:5px;font-size:14px}
 
 </main></div>
 
+<div id="lb"><div class="lb-h"><span id="lbCap"></span><button onclick="closeLB()" aria-label="Đóng">✕</button></div><div class="lb-b"><img id="lbImg" alt="Hình minh hoạ"></div></div>
+
 <nav class="tabbar">
   <button data-v="home" class="on" onclick="go('home')"><span class="ic">🏠</span>Trang chủ</button>
   <button data-v="learn" onclick="go('learn')"><span class="ic">📚</span>Học mẹo</button>
@@ -189,7 +207,8 @@ ul.tight{padding-left:20px}ul.tight li{margin-bottom:5px;font-size:14px}
 "use strict";
 /* ========= DỮ LIỆU MẸO — trích từ 2 tài liệu PDF người dùng gửi ========= */
 const CHAPS=[
- {id:"vang",name:"⭐ Mẹo vàng chọn đáp án",range:"Áp dụng toàn bộ phần chữ"},
+ {id:"m2025",name:"🆕 Mẹo BỘ ĐỀ 2025 · Mới nhất",range:"13 mẹo · bộ 600 câu 2025 của Cục CSGT — ƯU TIÊN HỌC PHẦN NÀY"},
+ {id:"vang",name:"⭐ Mẹo vàng chọn đáp án (tài liệu cũ)",range:"Áp dụng toàn bộ phần chữ"},
  {id:"c1",name:"Chương 1 · Khái niệm & quy tắc GT",range:"Câu 1–180"},
  {id:"tocdo",name:"Tốc độ · Khoảng cách · Tuổi · Hạng GPLX",range:"Câu 54–162"},
  {id:"c2",name:"Chương 2 · Văn hoá, đạo đức & nghiệp vụ vận tải",range:"Câu 167–213"},
@@ -198,7 +217,21 @@ const CHAPS=[
  {id:"sa",name:"Chương 6 · Sa hình & xử lý tình huống",range:"Câu 486–600"},
 ];
 const TIPS=[
-/* ---- MẸO VÀNG ---- */
+/* ---- 13 MẸO BỘ ĐỀ 2025 — tóm tắt từ taplaixe.vn/meo-thi-ly-thuyet-lai-xe ---- */
+{ch:"m2025",t:"2025 · Mẹo 1 — “Cả ba ý trên” ở phương án 4 → chọn luôn (chương I–IV)",b:"Câu 1–300: đề có 4 phương án và phương án 4 là “Cả ba ý trên” / “Ý 1 và ý 2” → chọn phương án 4. Tỉ lệ đúng 32/37 câu (86%).\n⚠️ 5 câu ngoại lệ BUỘC thuộc lòng: câu 5, 123, 170, 204, 229 — phương án cuối KHÔNG đúng.",m:"Cả ba ý → 4 · Ngoại lệ: 5 – 123 – 170 – 204 – 229",vd:"Câu 1–300 (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 2 — Biển báo: gạch ngay “Cả ba biển” & “Không biển nào”",b:"Chương V (câu 301–485):\n• “Cả ba biển” chỉ đúng 1/29 câu — duy nhất câu 370.\n• “Không biển nào” chỉ đúng 1/11 câu — duy nhất câu 432.\nGạch 2 phương án này trước; nếu phải đoán thì ưu tiên “Biển 2” (đáp án hay rơi vào nhất ở dạng “Biển nào…”).",m:"Cả ba biển → gạch · Không biển nào → gạch · Đoán → Biển 2",vd:"Câu 301–485 (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 3 — “Cả hai ý trên” ở câu 3 phương án: ĐỪNG dùng làm mẹo",b:"Nhiều tài liệu cũ khuyên thấy “Cả hai ý trên” là chọn — bộ 2025 chỉ đúng 34/62 câu (55%), như tung đồng xu.\nChỉ đáng tin khi đề dùng chữ “những…” hoặc “gồm những…” → đúng 7/8 câu (88%). Ngoại lệ: câu 69.",m:"Cả hai ý → bỏ · Có “những/gồm những” → mới chọn",vd:"Câu 3 phương án (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 4 — 60 câu điểm liệt: “An toàn là trên hết”",b:"Sai 1 câu điểm liệt là trượt dù đủ điểm. Đáp án đúng luôn là phương án AN TOÀN, THẬN TRỌNG nhất, thường chứa: “Không được”, “Không được phép”, “Bị nghiêm cấm”, “Quan sát, giảm tốc độ hoặc dừng lại”, “Nhường đường”.\nNhóm chủ đề: cồn–ma tuý–đua xe (19–32) · vượt–lùi–quay đầu (47–58, 85–86, 97–98, 246) · mô tô–mũ bảo hiểm (63–74) · nhường đường (87–93, 102, 117, 167, 198, 253) · giảm tốc–quan sát (34, 35, 163, 165, 245) · kỹ thuật lái (206, 226, 234, 251–255, 260) · bỏ trốn sau tai nạn (197).\n2 câu phản trực giác hay sai: câu 97 (xe CSGT không phát tín hiệu ưu tiên → ĐƯỢC vượt) và câu 260 (tăng ga từ từ, giảm ga thật nhanh).",m:"Điểm liệt → chọn ý an toàn nhất",vd:"60 câu điểm liệt (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 5 — “Không được phép” chỉ có ở 1 phương án → chọn ngay",b:"Cụm “không được phép” chỉ xuất hiện ở đúng 1 phương án → chọn phương án đó (đúng 10/11 câu, 91%).\nMở rộng “không được” nói chung: đúng 22/29 (76%).\nNgoại lệ: câu 97, 140, 261, 270, 341, 461, 484.",m:"Không được phép (duy nhất) → chọn · 91%",vd:"Bộ 2025"},
+{ch:"m2025",t:"2025 · Mẹo 6 — 18 câu khái niệm mở đầu (câu 1–18)",b:"Cả 18 câu đầu đều là định nghĩa, đáp án chia 3 nhóm:\n• PA 2: Phần đường, Làn đường, Dải phân cách, Vạch kẻ đường, Xe cơ giới, Dừng xe, Đỗ xe, Người điều khiển giao thông.\n• PA 1: Khổ giới hạn, Người điều khiển phương tiện, Người lái xe, Xe thô sơ, Đường cao tốc, Thiết bị an toàn trẻ em, Phân loại đường bộ.\n• PA 3: câu hỏi có chữ “GỒM / gồm những”.\nBẫy: câu 6 (hỏi “được hiểu”) → PA 1, câu 12 (hỏi “gồm những đối tượng”) → PA 3.",m:"Phần–Làn–Dải–Vạch → 2 · Khổ–Lái–Thô–Cao → 1 · Gồm → 3",vd:"Câu 1–18 (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 7 — Tốc độ: quy tắc bậc thang (câu 144–157)",b:"8 câu 149–156 dùng chung 4 phương án xếp từ nhanh nhất → chậm nhất:\nPA 1: ô tô ≤28 chỗ (trừ buýt), tải ≤3,5T · PA 2: ô tô >28 chỗ, tải >3,5T (trừ xi téc) · PA 3: buýt, đầu kéo, mô tô, ô tô chuyên dùng · PA 4: kéo rơ moóc, kéo xe khác, trộn vữa/bê tông, xi téc.\nMẹo: tốc độ cao nhất → PA 1, cứ giảm 10 km/h tụt 1 phương án. Ngoài dân cư đường đôi: 90–80–70–60; đường 2 chiều: 80–70–60–50.\nTrong dân cư: đường đôi 60, đường đơn 50 (câu 145–148). Xe gắn máy / máy chuyên dùng: 40 (câu 144).",m:"Nhanh nhất → PA 1 · Giảm 10 → tụt 1 bậc",vd:"Câu 144–157 (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 8 — Khoảng cách an toàn: thang 35 – 55 – 70 – 100",b:"Học thuộc dãy: tốc độ 60 → 35m · trên 60–80 → 55m · trên 80–100 → 70m · trên 100–120 → 100m.\n⚠️ BỎ công thức “tốc độ trừ 30” của bộ cũ — bộ 2025 chỉ đúng ở mốc 100 km/h.\nDưới 60 km/h hoặc đoạn không có biển cự ly → chọn ý “chủ động giữ khoảng cách / chấp hành quy định” (câu 162, 166).",m:"35 – 55 – 70 – 100 ↔ 60 – 80 – 100 – 120",vd:"Câu 158–166 (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 9 — Độ tuổi bộ 2025: chỉ còn 4 mốc",b:"• 18 tuổi: hạng A1, B, C1 (tải 3.500–7.500 kg) — câu 118, 119.\n• 24 tuổi: hạng D2 (chở người trên 16–29 chỗ) — câu 122.\n• 27 tuổi: hạng D (trên 29 chỗ, xe giường nằm) — câu 120.\n• Tuổi tối đa hạng D: nam 57, nữ 55 — câu 121.\n• Đủ 16 đến dưới 18 tuổi: chỉ được lái xe gắn máy — câu 123.\n⚠️ Khác hẳn tài liệu cũ: bộ 2025 KHÔNG còn mốc 21 tuổi (bảng 18–21–24–27 đã hết dùng).",m:"18 – 24 – 27 · Tối đa D: nam 57, nữ 55",vd:"Câu 118–123 (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 10 — Phân hạng GPLX mới: “Hạng lớn ôm hạng nhỏ”",b:"Cụm câu 125–135, quy luật đúng 11/11:\n• Hạng RỘNG (A, B, C, D2, D): ôm cả hạng nhỏ hơn → chọn “Cả hai ý trên / Ý 1 và ý 2”.\n• Hạng HẸP (A1, C1, D1) và hạng KÉO rơ moóc (BE, CE, DE): chọn ý riêng lẻ, KHÔNG chọn “Cả hai”.\nBảng hạng mới: A1 = mô tô đến 125 cm³ (điện đến 11 kW) · A = trên 125 cm³ · B = ô tô đến 8 chỗ, tải đến 3.500 kg · C1 = tải 3.500–7.500 kg · C = tải trên 7.500 kg · D1 = chở người trên 8–16 chỗ · D2 = trên 16–29 chỗ · D = trên 29 chỗ + giường nằm · Hạng E (BE/CE/DE…) = hạng gốc kéo rơ moóc trên 750 kg.\nBẫy: câu 124 hỏi A1 KHÔNG được lái xe nào → “Xe mô tô ba bánh” (PA 2).",m:"Hạng rộng → Cả hai · Hạng hẹp/kéo → ý riêng",vd:"Câu 124–135 (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 11 — Thứ tự nhường đường & sa hình (chương VI)",b:"Xét theo thứ tự, gặp điều nào đúng trước thì dừng:\n1. Đường sắt / tàu hoả — ưu tiên tuyệt đối.\n2. Xe ưu tiên đang phát tín hiệu: HOẢ – SỰ – AN – THƯƠNG (chữa cháy → quân sự → công an → cứu thương).\n3. Xe trên đường ưu tiên / đường chính đi trước.\n4. Vào nút giao: có vòng xuyến → nhường bên TRÁI; không vòng xuyến → nhường bên PHẢI.\n5. Cùng điều kiện: rẽ phải → đi thẳng → rẽ trái.\n6. Đường dốc: xe xuống nhường xe lên.\nPhương án “Cả bốn hướng” đúng 0/5 câu → gạch trước.",m:"Sắt – Ưu – Đường – Trái/Phải – Hướng – Dốc",vd:"Câu 486–600 (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 12 — Biển báo: “Cấm ĐẸP thì cấm XẤU”",b:"Nhớ hình dáng: “Xanh tròn HIỆU LỆNH phải theo / Xanh vuông CHỈ DẪN những điều cần nghe / Ba cạnh (tam giác) NGUY HIỂM e dè / Hình tròn viền đỏ CẤM nè.” Bộ đề có 5 nhóm biển: cấm, nguy hiểm, hiệu lệnh, chỉ dẫn, phụ (câu 33).\nCâu hỏi “biển này có cấm xe X không?” → dùng thứ tự xe từ “đẹp” (nhỏ) đến “xấu” (lớn): cấm xe nhỏ thì cấm luôn xe lớn hơn, cấm xe lớn thì xe nhỏ vẫn đi được. Xem hình minh hoạ ở mục Tra cứu.",m:"Cấm đẹp → cấm xấu · 5 nhóm biển",vd:"Câu 33, chương V (bộ 2025)"},
+{ch:"m2025",t:"2025 · Mẹo 13 — Hiệu lệnh CSGT + con số thần thánh 2025",b:"CSGT — bộ đề chỉ có 2 câu:\n• Một tay giơ thẳng đứng → mọi hướng phải dừng (trừ xe đã trong nút giao) → PA 3 (câu 37).\n• Hai tay dang ngang → trước/sau phải dừng, phải/trái được đi → PA 4 (câu 36).\nCon số phải nhớ: 0,25 m (đỗ cách lề — câu 60) · 20 m (đỗ cách xe khác, đường hẹp — 61) · còi 5h–22h (49) · lái liên tục 4 giờ (171) · làm việc 10 giờ/ngày (172) · GPLX 12 điểm — 12 tháng không trừ thì phục hồi đủ, trừ hết thì 6 tháng sau mới kiểm tra lại (27, 140, 141) · niên hạn chở người 20 năm / tải 25 năm (278, 277) · xe gắn máy 40 km/h (144) · 5 nhóm biển (33).\nCâu “đi đường phải mang theo giấy tờ gì?” → chọn phương án cuối (câu 138).",m:"CSGT: 1 tay → 3 · 2 tay → 4 · Điểm GPLX: 12 – 12 – 6",vd:"Câu 27, 33, 36, 37, 49, 60, 61, 138–141, 171, 172 (bộ 2025)"},
+/* ---- MẸO VÀNG (tài liệu cũ) ---- */
 {ch:"vang",t:"Mẹo 1 — Thấy “Bị nghiêm cấm” là chọn ngay",b:"Đáp án nào chứa cụm từ “Bị nghiêm cấm” → đó là đáp án đúng, không cần đọc hết đề.\nTương tự: đáp án bắt đầu bằng “Không được…” → đúng 99%.",m:"Nghiêm cấm = chọn. Không được = chọn.",vd:"Câu 18, 20, 22, 24, 26, 30, 209"},
 {ch:"vang",t:"Mẹo 2 — Đáp án cuối “Cả ý (…) và ý (…)” đúng 90%",b:"Câu trả lời cuối cùng có dạng “Cả ý 1 và ý 2…” → chọn đáp án cuối.\nNếu đề có 4 đáp án và đáp án 4 chứa từ “Cả” → chọn luôn đáp án 4.\nNgoại lệ: câu về rượu bia (chọn 1), người đủ 16 tuổi (chọn 2), hạng FC (chọn 2), vận tải khách (chọn 3), câu biển báo.",m:"Có “Cả” ở ý 4 → bấm 4.",vd:"Câu 24, 59, 70, 169 là ngoại lệ"},
 {ch:"vang",t:"Mẹo 3 — “Quan to quan bự”: chọn đáp án “quan” dài nhất",b:"Đáp án nào có từ “quan sát / cơ quan…” và DÀI nhất → đáp án đó đúng.\n2 đáp án “quan” dài bằng nhau → chọn đáp án ở trên.\nĐầu đáp án có “Quan sát…” → chọn đáp án dài nhất.",m:"Quan dài là quan đúng.",vd:"Câu 92, 218, 223, 254, 257, 264"},
@@ -323,10 +356,49 @@ const QUIZ=[
 {q:"Trong sa hình, xe đạp đi cùng chiều với xe của bạn → chọn đáp án mấy?",a:["Đáp án 1","Đáp án 2","Đáp án 3","Đáp án 4"],c:1,e:"Đạp cùng chiều → 2 · Đạp khác chiều → 3."},
 {q:"Hình sa hình thấy xe trước kéo theo xe sau → kết luận?",a:["Đúng quy định","Không đúng / vi phạm","Được phép nếu đi chậm","Chỉ sai khi vào cao tốc"],c:1,e:"Xe kéo xe trong hình = vi phạm (chỉ áp dụng phần hình)."},
 {q:"Sử dụng GPLX đã báo mất để lái xe thì bị xử lý thế nào?",a:["Phạt tiền là xong","5 năm không được cấp GPLX","Thu hồi 1 năm","Không bị xử lý"],c:1,liet:1,e:"Dùng bằng đã báo mất / gian dối: 5 năm không được cấp GPLX."},
+{q:"[Bộ 2025] Hạng A1 được lái mô tô đến bao nhiêu phân khối?",a:["Dưới 175 cm³","Đến 125 cm³","Trên 125 cm³","Không giới hạn"],c:1,e:"Luật mới 2025: A1 đến 125 cm³ (động cơ điện đến 11 kW). Mốc 175 cm³ là của bộ đề cũ."},
+{q:"[Bộ 2025] GPLX có bao nhiêu điểm, trừ hết điểm thì bao lâu mới được kiểm tra lại?",a:["10 điểm – 3 tháng","12 điểm – 6 tháng","12 điểm – 12 tháng","Không có điểm"],c:1,e:"12 – 12 – 6: GPLX 12 điểm; 12 tháng không bị trừ thì phục hồi đủ; trừ hết thì sau 6 tháng mới được kiểm tra lại."},
+{q:"[Bộ 2025] Câu hỏi về hạng rộng (A, B, C, D2, D) thường chọn đáp án nào?",a:["Ý riêng lẻ đầu tiên","“Cả hai ý trên / Ý 1 và ý 2”","Ý dài nhất","Phương án cuối khác"],c:1,e:"“Hạng lớn ôm hạng nhỏ”: hạng rộng → chọn Cả hai ý. Hạng hẹp (A1, C1, D1) và hạng kéo (BE, CE, DE) → chọn ý riêng lẻ."},
+{q:"[Bộ 2025] Phương án “Cả ba biển” trong câu biển báo xử lý thế nào?",a:["Luôn chọn","Gạch ngay — chỉ đúng duy nhất ở câu 370","Chọn khi phân vân","Đúng một nửa số câu"],c:1,liet:0,e:"“Cả ba biển” đúng 1/29 câu (câu 370); “Không biển nào” đúng 1/11 (câu 432). Gạch trước, đoán thì ưu tiên Biển 2."},
 ];
 /* ========= TRA CỨU ========= */
-const LOOKUP_HTML=`
-<div class="card"><h3>🚀 Bảng tốc độ tối đa cho phép (km/h)</h3>
+const GALLERY=[
+["hinh-bien-cam.jpg","Bảng biển báo CẤM — tra nhanh mọi biển tròn đỏ"],
+["hinh-bien-nguy-hiem.jpg","Bảng biển báo NGUY HIỂM — tam giác vàng"],
+["hinh-bien-chi-dan.jpg","Bảng biển CHỈ DẪN + HIỆU LỆNH — xanh vuông / xanh tròn"],
+["hinh-nhom-bien.jpg","5 nhóm biển báo + phân biệt biển buýt/khách, đường ưu tiên"],
+["hinh-bien-de-nham.jpg","Biển dễ nhầm + thứ tự cấm xe nhỏ → lớn"],
+["hinh-cam-mo-to.jpg","Biển cấm mô tô / ô tô, cấm vượt, cấm rẽ — kèm ví dụ có đáp án"],
+["hinh-vong-tron-toc-do.jpg","Vòng tròn tốc độ tối đa/tối thiểu, biển 7t, chiều dài – khoảng cách"],
+["hinh-ba-nguoi.jpg","3 hình người: Nhường – Cấm – Dành + biển phụ"],
+["hinh-tron-xanh.jpg","Biển tròn xanh hiệu lệnh + biển làn đường theo tốc độ"],
+["hinh-cau-vuot.jpg","Cầu vượt liên thông/cắt qua, biển đường sắt, biển phụ"],
+["hinh-vach-ke.jpg","Vạch kẻ đường vàng/trắng + quy luật cấm xe"],
+["hinh-sa-hinh-5-nguyen-tac.jpg","5 nguyên tắc sa hình + mẹo xe công an, kèm hình ngã tư mẫu"],
+["hinh-csgt-hanh-vi.jpg","CSGT giơ tay + các hành vi bị cấm (sách HLX)"],
+["hinh-meo-dau-cau.jpg","Mẹo đầu câu/cuối câu chọn đáp án (sách HLX trang 1)"],
+["hinh-tap-lo.jpg","Ký hiệu đèn báo trên tap-lô ô tô"],
+["https://taplaixe.vn/assets/images/goi-y/meo-giai-cac-cau-hoi-khoang-cach-an-toan.png","Bộ 2025: khoảng cách an toàn theo tốc độ (Ảnh: taplaixe.vn)"],
+["https://taplaixe.vn/assets/images/goi-y/hinh-dang-va-y-nghia-bien-bao.png","Bộ 2025: hình dạng & ý nghĩa các nhóm biển báo (Ảnh: taplaixe.vn)"],
+["https://taplaixe.vn/assets/images/goi-y/meo-giai-cac-cau-bien-bao.png","Bộ 2025: mẹo biển báo — cấm đẹp thì cấm xấu (Ảnh: taplaixe.vn)"],
+];
+function openLB(src,cap){$("#lbImg").src=src;$("#lbCap").textContent=cap||"";$("#lb").classList.add("on");document.body.style.overflow="hidden";}
+function closeLB(){$("#lb").classList.remove("on");document.body.style.overflow="";}
+const GALLERY_HTML=`<div class="card"><h3>🖼️ Thư viện hình minh hoạ (chụp từ 2 tài liệu gốc)</h3><p class="note" style="margin-bottom:10px">Bấm vào hình để xem phóng to, đọc rõ từng biển báo.</p><div class="gal">${GALLERY.map(g=>`<figure onclick="openLB('${g[0]}','${g[1].replace(/'/g,"")}')"><img loading="lazy" src="${g[0]}" alt="${g[1]}"><figcaption>${g[1]}</figcaption></figure>`).join("")}</div></div>`;
+const LOOKUP_HTML=GALLERY_HTML+`
+<div class="card" style="border-color:var(--warn)"><h3>🆕 Phân hạng GPLX theo bộ 2025 (học bảng này)</h3>
+<table><tr><th>Hạng</th><th>Được lái</th><th>Tuổi</th></tr>
+<tr><td>A1</td><td>Mô tô 2 bánh đến 125 cm³ (điện đến 11 kW)</td><td>18</td></tr>
+<tr><td>A</td><td>Mô tô trên 125 cm³ + cả xe A1</td><td>18</td></tr>
+<tr><td>B</td><td>Ô tô đến 8 chỗ; ô tô tải đến 3.500 kg</td><td>18</td></tr>
+<tr><td>C1</td><td>Ô tô tải trên 3.500 – 7.500 kg</td><td>18</td></tr>
+<tr><td>C</td><td>Ô tô tải trên 7.500 kg + cả xe C1</td><td>—</td></tr>
+<tr><td>D1</td><td>Ô tô chở người trên 8 – 16 chỗ</td><td>—</td></tr>
+<tr><td>D2</td><td>Ô tô chở người trên 16 – 29 chỗ + cả xe D1</td><td>24</td></tr>
+<tr><td>D</td><td>Ô tô chở người trên 29 chỗ, xe giường nằm</td><td>27 (tối đa nam 57 / nữ 55)</td></tr>
+<tr><td>BE, C1E, CE, D1E, D2E, DE</td><td>Xe của hạng gốc kéo rơ moóc trên 750 kg</td><td>Theo hạng gốc</td></tr></table>
+<p class="note" style="margin-top:8px">Quy luật: <b>hạng lớn ôm hạng nhỏ</b> → câu hỏi hạng rộng chọn “Cả hai ý”, hạng hẹp/hạng kéo chọn ý riêng lẻ. Nguồn: <a href="https://taplaixe.vn/meo-thi-ly-thuyet-lai-xe" target="_blank" rel="noopener">taplaixe.vn — Mẹo thi lý thuyết 600 câu 2025</a>. Các bảng phía dưới là theo tài liệu cũ, chỉ tham khảo.</p></div>
+<div class="card"><h3>🚀 Bảng tốc độ tối đa cho phép (km/h) — tài liệu cũ</h3>
 <table><tr><th>Loại xe / đường</th><th>Đường đôi, 1 chiều ≥2 làn</th><th>Đường 2 chiều, 1 làn</th></tr>
 <tr><td colspan="3"><b>TRONG khu vực đông dân cư</b></td></tr>
 <tr><td>Xe gắn máy, máy điện, máy chuyên dùng</td><td>40</td><td>40</td></tr>
@@ -396,16 +468,18 @@ function renderChips(){$("#chapChips").innerHTML=`<button class="chip ${curChap=
 function setChap(id){curChap=id;renderChips();renderTips();}
 function toggleOnlyNew(){onlyNew=!onlyNew;$("#btnNew").textContent=onlyNew?"Đang lọc: chưa thuộc (bấm để tắt)":"Chỉ xem chưa thuộc";renderTips();}
 function renderTips(){const list=filteredTips();$("#flashBox").innerHTML="";flashOn=false;$("#tipList").innerHTML=list.length?list.map(t=>tipCard(t)).join(""):`<div class="card"><p>Không có thẻ nào khớp. ${onlyNew?"Bạn đã thuộc hết phần này rồi 🎉":"Thử từ khoá khác nhé."}</p></div>`;}
-function tipCard(t){const done=learned.has(t.idx);return `<article class="tip ${done?"learned":""}">
+const IMGMAP=[["5 nhóm biển","hinh-nhom-bien.jpg"],["CẤM 1 — ĐƯỢC 3","hinh-cam-mo-to.jpg"],["Biển cấm vượt","hinh-cam-mo-to.jpg"],["Tốc độ tối đa (đỏ)","hinh-vong-tron-toc-do.jpg"],["Hình tròn 7t","hinh-vong-tron-toc-do.jpg"],["Chiều dài hay khoảng cách","hinh-vong-tron-toc-do.jpg"],["3 người trong 3 hình","hinh-ba-nguoi.jpg"],["Cầu vượt liên thông","hinh-cau-vuot.jpg"],["Vạch kẻ đường: trắng cùng","hinh-vach-ke.jpg"],["Phân biệt biển dễ nhầm","hinh-bien-de-nham.jpg"],["Đèn báo tap-lô","hinh-tap-lo.jpg"],["CSGT giơ tay","hinh-csgt-hanh-vi.jpg"],["5 nguyên tắc sa hình","hinh-sa-hinh-5-nguyen-tac.jpg"],["Quy luật cấm liên đới","hinh-bien-de-nham.jpg"],["ZONE, biển 50 trắng","hinh-tron-xanh.jpg"]];
+function tipImg(t){const m=IMGMAP.find(x=>t.t.includes(x[0]));return m?m[1]:null;}
+function tipCard(t){const done=learned.has(t.idx);const im=tipImg(t);return `<article class="tip ${done?"learned":""}">
 <div class="tip-h"><h4>${t.t}</h4><span class="tag">${chapName(t.ch)}</span></div>
-<div class="tip-b">${t.b}</div>
+<div class="tip-b">${t.b}</div>${im?`<img class="tipimg" loading="lazy" src="${im}" alt="Hình minh hoạ: ${t.t}" onclick="openLB('${im}','${t.t.replace(/'/g,"")}')">`:""}
 ${t.m?`<div class="mnemo">🧠 <b>Ghi nhớ:</b> ${t.m}</div>`:""}
 <div class="tip-f"><span class="vd">Áp dụng: ${t.vd||""}</span><button class="chk ${done?"done":""}" onclick="toggleLearn(${t.idx})">${done?"✓ Đã thuộc":"Đánh dấu đã thuộc"}</button></div></article>`;}
 function toggleLearn(i){learned.has(i)?learned.delete(i):learned.add(i);saveLearned();if(flashOn){renderFlash();}else{renderTips();}}
 function startFlash(){const list=filteredTips();if(!list.length)return;flashOn=true;flashIdx=0;$("#tipList").innerHTML="";renderFlash();}
 function renderFlash(){const list=filteredTips();if(!list.length){$("#flashBox").innerHTML="";return;}flashIdx=Math.max(0,Math.min(flashIdx,list.length-1));const t=list[flashIdx];
-$("#flashBox").innerHTML=`<div class="card flash"><div class="tip-h"><h4>${t.t}</h4><span class="tag">Thẻ ${flashIdx+1}/${list.length}</span></div>
-<div class="tip-b">${t.b}</div>${t.m?`<div class="mnemo">🧠 <b>Ghi nhớ:</b> ${t.m}</div>`:""}
+const fim=tipImg(t);$("#flashBox").innerHTML=`<div class="card flash"><div class="tip-h"><h4>${t.t}</h4><span class="tag">Thẻ ${flashIdx+1}/${list.length}</span></div>
+<div class="tip-b">${t.b}</div>${fim?`<img class="tipimg" src="${fim}" alt="Hình minh hoạ: ${t.t}" onclick="openLB('${fim}','${t.t.replace(/'/g,"")}')">`:""}${t.m?`<div class="mnemo">🧠 <b>Ghi nhớ:</b> ${t.m}</div>`:""}
 <div class="rowbtns"><button class="btn gray" onclick="flashMove(-1)">← Trước</button>
 <button class="btn ${learned.has(t.idx)?"gray":""}" onclick="toggleLearn(${t.idx})">${learned.has(t.idx)?"✓ Đã thuộc":"Đánh dấu đã thuộc"}</button>
 <button class="btn" onclick="flashMove(1)">Tiếp →</button></div>
